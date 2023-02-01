@@ -1,0 +1,18 @@
+{
+    "name": "GGJ2023.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:fc4c55c6b6ccd024c8c1f6cc7b1c36d3"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

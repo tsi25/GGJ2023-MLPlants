@@ -1,0 +1,1 @@
+Folder to contain art assets such as sprites, models, materials, etc.
