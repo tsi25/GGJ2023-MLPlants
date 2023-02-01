@@ -1,0 +1,1 @@
+Folder to contain scriptable objects and other assets for use in the game.
