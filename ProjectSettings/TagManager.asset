@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - badFood
+  - ground
+  - wall
+  - agent
+  - food
+  - frozenAgent
   layers:
   - Default
   - TransparentFX
