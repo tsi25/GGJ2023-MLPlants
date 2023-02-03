@@ -154,4 +154,5 @@ MonoBehaviour:
   viewPrefabs:
   - {fileID: 2879327300372612843, guid: 6a261a0baa6612d4f9355532a08d42b5, type: 3}
   - {fileID: 6757542037462267182, guid: d2077247396fad74dbbd1bf77a9cd2ee, type: 3}
-  modalPrefabs: []
+  - {fileID: 6232803681062433655, guid: 2556dc27d6457cf4bb361c5de03bf2b9, type: 3}
+  - {fileID: 2687157306123094950, guid: d572c6f302f6a8e418bbc4ed7e1d0b51, type: 3}

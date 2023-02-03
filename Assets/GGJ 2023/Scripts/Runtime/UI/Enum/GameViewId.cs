@@ -10,6 +10,8 @@ namespace GGJRuntime
         Main    = 2,
         Settings    = 3,
         Game    = 4,
+        Credits = 5,
+        Background  = 6,
         Modal   = 100
     }
 }

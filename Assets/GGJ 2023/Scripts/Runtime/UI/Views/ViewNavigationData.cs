@@ -28,7 +28,7 @@ namespace GGJRuntime
 
         private void OnButtonClicked()
         {
-            UIManager.GetView<GameView>(id).OpenAsync();
+            if(id != GameViewId.None) UIManager.GetView<GameView>(id).OpenAsync();
 
             if(!keepOpen) view.CloseAsync();
         }
