@@ -4,6 +4,6 @@ namespace GGJRuntime
 {
     public abstract class DragLogic : ScriptableObject
     {
-        public abstract void DoLogic(Draggable draggable);
+        public abstract void DoLogic(Draggable dragTarget, Droppable dropArea);
     }
 }

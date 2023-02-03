@@ -10,12 +10,12 @@ namespace GGJRuntime
         private bool initOnEnable = true;
         [SerializeField, Tooltip("Valid drop area flags. Invalid flags will be rejected from the drop.")]
         protected DragGroupFlags flags = DragGroupFlags.None;
-        [SerializeField, Tooltip("[Optional] Logic executed when the draggable is dropped on an invalid droppable.")]
-        protected DragLogic invalidLogic = null;
-        [SerializeField, Tooltip("[Optional] Logic executed when the draggable is dropped on an invalid droppable.")]
-        protected DragLogic validLogic = null;
-        [SerializeField, Tooltip("[Optional] Logic executed when the draggable is not dropped on a droppable.")]
-        protected DragLogic dropLogic = null;
+        [SerializeField, Tooltip("[Optional] Logic sequentially executed when the draggable is dropped on an invalid droppable.")]
+        protected DragLogic[] invalidLogic = new DragLogic[0];
+        [SerializeField, Tooltip("[Optional] Logic sequentially executed when the draggable is dropped on an invalid droppable.")]
+        protected DragLogic[] validLogic = new DragLogic[0];
+        [SerializeField, Tooltip("[Optional] Logic sequentially executed when the draggable is not dropped on a droppable.")]
+        protected DragLogic[] dropLogic = new DragLogic[0];
         [SerializeField]
         private CanvasGroup canvasGroup = null;
 
@@ -38,19 +38,25 @@ namespace GGJRuntime
         }
 
 
-        public void DoInvalidDrop()
+        public void DoInvalidDrop(Droppable dropArea)
         {
             CanDoDropLogic = false;
 
-            if(invalidLogic != null) invalidLogic.DoLogic(this);
+            for(int i=0; i < invalidLogic.Length; i++)
+            {
+                invalidLogic[i].DoLogic(this, dropArea);
+            }
         }
 
 
-        public void DoValidDrop()
+        public void DoValidDrop(Droppable dropArea)
         {
             CanDoDropLogic = false;
-
-            if(validLogic != null) validLogic.DoLogic(this);
+            
+            for(int i=0; i < validLogic.Length; i++)
+            {
+                validLogic[i].DoLogic(this, dropArea);
+            }
         }
 
 
@@ -91,9 +97,12 @@ namespace GGJRuntime
 
             canvasGroup.blocksRaycasts = true;
 
-            if(CanDoDropLogic && dropLogic != null)
+            if(CanDoDropLogic)
             {
-                dropLogic.DoLogic(this);
+                for(int i=0; i < dropLogic.Length; i++)
+                {
+                    dropLogic[i].DoLogic(this, null);
+                }
             }
         }
 

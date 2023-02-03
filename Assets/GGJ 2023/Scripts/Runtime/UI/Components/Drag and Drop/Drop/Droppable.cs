@@ -22,13 +22,13 @@ namespace GGJRuntime
             {
                 //Valid
                 Debug.Log("Valid");
-                Draggable.CurrentDraggable.DoValidDrop();
+                Draggable.CurrentDraggable.DoValidDrop(this);
             }
             else
             {
                 //Invalid
                 Debug.Log("Invalid");
-                Draggable.CurrentDraggable.DoInvalidDrop();
+                Draggable.CurrentDraggable.DoInvalidDrop(this);
             }
         }
     }

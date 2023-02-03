@@ -1086,9 +1086,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initOnEnable: 1
   flags: 1
-  invalidLogic: {fileID: 11400000, guid: fce939a19818c6043be421b619c7e2ae, type: 2}
-  validLogic: {fileID: 0}
-  dropLogic: {fileID: 11400000, guid: fce939a19818c6043be421b619c7e2ae, type: 2}
+  invalidLogic:
+  - {fileID: 11400000, guid: 68eccc5c97693ee4aada3bdd11315818, type: 2}
+  - {fileID: 11400000, guid: 759fb6b2b6eeabf41be0ba2de0e2bf94, type: 2}
+  validLogic:
+  - {fileID: 11400000, guid: 4a6e6cc8a30e91e4aafe6d7d16626114, type: 2}
+  - {fileID: 11400000, guid: 7216df4cab527944b949285b674c33d9, type: 2}
+  dropLogic:
+  - {fileID: 11400000, guid: 68eccc5c97693ee4aada3bdd11315818, type: 2}
   canvasGroup: {fileID: 1657452754}
 --- !u!225 &1657452754
 CanvasGroup:

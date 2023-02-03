@@ -7,11 +7,11 @@ namespace GGJRuntime
     {
         public SoundId invalidSound = SoundId.None;
 
-        public override void DoLogic(Draggable draggable)
+        public override void DoLogic(Draggable dragTarget, Droppable dropArea)
         {
             if(invalidSound != SoundId.None) SoundManager.Play(invalidSound);
 
-            draggable.ResetToDefaultParent();
+            dragTarget.ResetToDefaultParent();
         }
     }
 }
