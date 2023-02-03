@@ -6,6 +6,7 @@ using UnityEngine;
 namespace GGJRuntime
 {
     [CreateAssetMenu(fileName =nameof(BaseSoilFeature), menuName = "GGJ/Data/"+nameof(BaseSoilFeature))]
+    [System.Serializable]
     public class BaseSoilFeature : ScriptableObject
     {
         /// <summary>
