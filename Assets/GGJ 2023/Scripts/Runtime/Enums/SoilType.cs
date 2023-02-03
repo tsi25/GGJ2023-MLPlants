@@ -1,5 +1,6 @@
 namespace GGJRuntime
 {
+    [System.Serializable]
     public enum SoilType : byte
     {
         None = 0,

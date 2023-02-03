@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GGJRuntime
 {
-    public class Test : MonoBehaviour
+    public class TweenGroup : MonoBehaviour
     {
         // Start is called before the first frame update
         void Start()

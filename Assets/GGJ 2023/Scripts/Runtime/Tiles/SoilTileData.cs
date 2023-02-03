@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 namespace GGJRuntime
 {
     [CreateAssetMenu(fileName = nameof(SoilTileData), menuName ="GGJ/Data/"+nameof(SoilTileData))]
+    [System.Serializable]
     public class SoilTileData : ScriptableObject
     {
         /// <summary>
