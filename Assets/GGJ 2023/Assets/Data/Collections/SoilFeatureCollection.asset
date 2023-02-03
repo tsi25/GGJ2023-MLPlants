@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <SoilFeatures>k__BackingField:
   - {fileID: 11400000, guid: 9da6800bc3c58f94da926248e51b3484, type: 2}
+  - {fileID: 11400000, guid: 671e55fcbde545344b8e49510e08d70e, type: 2}
+  - {fileID: 11400000, guid: 0da9a4421151aff4789b5b5e86e92d35, type: 2}
   - {fileID: 11400000, guid: 7e94ab8702907474f9d33a1e68c4161f, type: 2}
   - {fileID: 11400000, guid: 2e2c39fc8bd2aeb459c6fe7a6167a12a, type: 2}
   - {fileID: 11400000, guid: c557b3c06270968468061c8cf8bf8b04, type: 2}
   - {fileID: 11400000, guid: 5a1cf186095399f4ea4be44ce537fcd9, type: 2}
+  - {fileID: 11400000, guid: 42222f727207a794eb66d0fc7d297896, type: 2}
