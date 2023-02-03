@@ -25,6 +25,8 @@ namespace GGJRuntime
 
         public void CalculateMap()
         {
+            DataMap.Clear();
+
             BoundsInt mapBounds = Map.cellBounds;
 
             Debug.Log("Map Boudns : " + mapBounds);
@@ -34,6 +36,30 @@ namespace GGJRuntime
                 for (int y = mapBounds.yMin; y < mapBounds.yMax; y++)
                 {
                     Vector3Int coordinates = new Vector3Int(x, y, 0);
+                    TileBase tile = Map.GetTile(coordinates);
+                    SoilTileData data = FeatureCollection.GetDataByTile(tile);
+
+                    DataMap.Add(new Vector3Int(x, y, 0), data);
+                }
+            }
+        }
+
+        public void GenerateSuperRandomMap()
+        {
+            DataMap.Clear();
+
+            BoundsInt mapBounds = Map.cellBounds;
+
+            Debug.Log("Map Boudns : " + mapBounds);
+
+            for (int x = mapBounds.xMin; x < mapBounds.xMax; x++)
+            {
+                for (int y = mapBounds.yMin; y < mapBounds.yMax; y++)
+                {
+                    Vector3Int coordinates = new Vector3Int(x, y, 0);
+
+                    Map.SetTile(coordinates, FeatureCollection.SoilFeatures[Random.Range(0, FeatureCollection.SoilFeatures.Length)].Tile);
+
                     TileBase tile = Map.GetTile(coordinates);
                     SoilTileData data = FeatureCollection.GetDataByTile(tile);
 
@@ -65,6 +91,12 @@ namespace GGJRuntime
             SoilTileData data = GetDataByCoordinate(_testCoordinate);
             Debug.Log(data.name);
             Debug.Log(data.Features.Length);
+        }
+
+        [ContextMenu("Generate Super Random Map")]
+        public void EditorGenerateSuperRandomMap()
+        {
+            GenerateSuperRandomMap();
         }
 
 #endif
