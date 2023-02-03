@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea33ef99e1b76024098b8c8252c05dc0, type: 3}
+  m_Name: SoilFeatureCollection
+  m_EditorClassIdentifier: 
+  <SoilFeatures>k__BackingField:
+  - {fileID: 11400000, guid: 9da6800bc3c58f94da926248e51b3484, type: 2}
+  - {fileID: 11400000, guid: 7e94ab8702907474f9d33a1e68c4161f, type: 2}
+  - {fileID: 11400000, guid: 2e2c39fc8bd2aeb459c6fe7a6167a12a, type: 2}
+  - {fileID: 11400000, guid: c557b3c06270968468061c8cf8bf8b04, type: 2}
+  - {fileID: 11400000, guid: 5a1cf186095399f4ea4be44ce537fcd9, type: 2}
