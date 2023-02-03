@@ -60,9 +60,19 @@ namespace GGJRuntime
                 view = Instantiate(prefab, ViewsParent);
 
                 Instance.views.Add(view);
+
+                Instance.SortViews();
             }
 
             return (T)view;
+        }
+
+
+        public void SortViews()
+        {
+            views.Sort((a, b) => a.Order.CompareTo(b.Order));
+
+            views.ForEach(v => v.rectTransform.SetAsLastSibling());
         }
 
 
