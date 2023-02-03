@@ -7,13 +7,13 @@ namespace GGJRuntime
     {
         [SerializeField]
         private List<GameView> viewPrefabs = null;
-        [SerializeField]
-        private List<GameModal> modalPrefabs = null;
+        //[SerializeField]
+        //private List<GameModal> modalPrefabs = null;
 
         private RectTransform viewsParent = null;
-        private RectTransform modalsParent = null;
+        //private RectTransform modalsParent = null;
         private List<GameView> views = new List<GameView>();
-        private List<GameModal> modals = new List<GameModal>();
+        //private List<GameModal> modals = new List<GameModal>();
 
         private static UIManager instance = null;
 

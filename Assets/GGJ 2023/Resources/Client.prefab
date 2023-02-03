@@ -1,5 +1,55 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2956391731699126752
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7671515981387007121}
+  - component: {fileID: 1087304809206279296}
+  m_Layer: 0
+  m_Name: _SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7671515981387007121
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2956391731699126752}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8583896875856777451}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1087304809206279296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2956391731699126752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16cafc84929b9a847b7d2c1e0efa5349, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourcePrefab: {fileID: 5720624758371449466, guid: eda76f982990164429d363499f1b4ca4, type: 3}
+  mainMixerGroup: {fileID: 24300002, guid: 2b8c5d3fa73ef944d9fac4f8e8286d98, type: 2}
+  musicMixerGroup: {fileID: 4828867760645556164, guid: 2b8c5d3fa73ef944d9fac4f8e8286d98, type: 2}
+  sfxMixerGroup: {fileID: -6678537339943189931, guid: 2b8c5d3fa73ef944d9fac4f8e8286d98, type: 2}
+  sounds:
+  - {fileID: 11400000, guid: d1205308d2f7de44f9022057c132b825, type: 2}
 --- !u!1 &8583896875856777449
 GameObject:
   m_ObjectHideFlags: 0
@@ -29,10 +79,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7671515981387007121}
   - {fileID: 8583896876530059143}
   - {fileID: 8583896876866756655}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8583896875856777448
 MonoBehaviour:

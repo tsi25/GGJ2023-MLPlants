@@ -14,7 +14,6 @@ namespace GGJRuntime
 
         public void Initialize(GameView parentView)
         {
-            Debug.Log(parentView.name);
             view = parentView;
             button.onClick.AddListener(OnButtonClicked);
         }
@@ -29,7 +28,6 @@ namespace GGJRuntime
 
         private void OnButtonClicked()
         {
-            Debug.Log("Test");
             UIManager.GetView<GameView>(id).OpenAsync();
 
             if(!keepOpen) view.CloseAsync();
