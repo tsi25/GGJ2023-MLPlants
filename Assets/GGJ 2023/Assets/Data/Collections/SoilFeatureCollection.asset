@@ -12,6 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea33ef99e1b76024098b8c8252c05dc0, type: 3}
   m_Name: SoilFeatureCollection
   m_EditorClassIdentifier: 
+  <VeryGoodTileTypes>k__BackingField: 28
+  <GoodTileTypes>k__BackingField: 0a
+  <BadTileTypes>k__BackingField: 1432
+  <VeryBadTileTypes>k__BackingField: 1e
+  <VeryGoodModifier>k__BackingField: 1
+  <GoodModifier>k__BackingField: 0.5
+  <VeryBadModifier>k__BackingField: -1
+  <BadModifier>k__BackingField: -0.5
   <SoilFeatures>k__BackingField:
   - {fileID: 11400000, guid: 9da6800bc3c58f94da926248e51b3484, type: 2}
   - {fileID: 11400000, guid: 671e55fcbde545344b8e49510e08d70e, type: 2}

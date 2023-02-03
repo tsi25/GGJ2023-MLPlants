@@ -91,6 +91,7 @@ namespace GGJRuntime
             SoilTileData data = GetDataByCoordinate(_testCoordinate);
             Debug.Log(data.name);
             Debug.Log(data.Features.Length);
+            Debug.Log(data);
         }
 
         [ContextMenu("Generate Super Random Map")]
