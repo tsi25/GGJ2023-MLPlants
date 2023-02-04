@@ -9,47 +9,95 @@ namespace GGJRuntime
     [CreateAssetMenu(fileName = nameof(SoilFeatureCollection), menuName =("GGJ/Collections/"+nameof(SoilFeatureCollection)))]
     public class SoilFeatureCollection : ScriptableObject
     {
+        //TODO instead of set in the inspector like this, this needs to be user driven
+        [field: SerializeField]
+        public SoilType[] VeryGoodTileTypes { get; private set; } = new SoilType[0];
+        [field: SerializeField]
+        public SoilType[] GoodTileTypes { get; private set; } = new SoilType[0];
+
+        [field: SerializeField]
+        public SoilType[] BadTileTypes { get; private set; } = new SoilType[0];
+        [field: SerializeField]
+        public SoilType[] VeryBadTileTypes { get; private set; } = new SoilType[0];
+
+        [field: SerializeField]
+        public float VeryGoodModifier { get; private set; } = 1f;
+        [field: SerializeField]
+        public float GoodModifier { get; private set; } = 0.5f;
+
+        [field: SerializeField]
+        public float VeryBadModifier { get; private set; } = -1f;
+        [field: SerializeField]
+        public float BadModifier { get; private set; } = -0.5f;
+
+
         /// <summary>
         /// Static array of soil features used to track valid tiles
         /// </summary>
         [field: SerializeField, Tooltip("Static array of soil features used to track valid tiles")]
         public SoilTileData[] SoilFeatures { get; private set; } = new SoilTileData[0];
 
-        private Dictionary<TileBase, SoilTileData> _dictionary = null;
-
+        /// <summary>
+        /// Takes a tile and looks up the data associated with that tile
+        /// </summary>
+        /// <param name="tile">The tile to look up data for</param>
+        /// <returns>The data associated with the given tile</returns>
         public SoilTileData GetDataByTile(TileBase tile)
         {
-            if (tile == null) { Debug.LogWarning("Requested Data for null tile, returning null!"); return null; }
-            if (_dictionary == null) { InitializeDictionary(); }
-
-            if (_dictionary.ContainsKey(tile))
-                return _dictionary[tile];
-
-            Debug.LogWarning($"Dictionary on {name} could not find Tile, solving in non-performant manner!");
-
+            // TODO prolly a cool way to optimize this with a dictionary but it involves some initialization i dont want to think about atm
             return SoilFeatures.FirstOrDefault(sf => sf.Tile == tile);
-
+        }
+        
+        /// <summary>
+        /// Takes a tile and looks up the point value associate with that tile based on current settings
+        /// </summary>
+        /// <param name="tile"></param>
+        /// <returns></returns>
+        public float GetPointsFromTile(TileBase tile)
+        {
+            return GetPointsFromData(GetDataByTile(tile));
         }
 
-        public void InitializeDictionary()
+        /// <summary>
+        /// Takes a tile data and looks up the point value associate with that tile based on current settings
+        /// </summary>
+        /// <param name="tile"></param>
+        /// <returns></returns>
+        public float GetPointsFromData(SoilTileData data)
         {
-            if (_dictionary == null)
-                _dictionary = new Dictionary<TileBase, SoilTileData>();
-            else
-                _dictionary.Clear();
+            float tileScore = 0f;
 
-            for (int i = 0; i < SoilFeatures.Length; i++)
+            //loop through each tile feature and update the tile score to reflect the given score of the tile
+            //result must be a normalized value between -1.0 and 1.0
+
+            for (int i = 0; i < data.Features.Length; i++)
             {
-                _dictionary[SoilFeatures[i].Tile] = SoilFeatures[i];
-            }
-        }
+                if (VeryGoodTileTypes.Contains(data.Features[i].SoilType))
+                {
+                    tileScore += data.Features[i].FeatureStrength * VeryGoodModifier;
+                    continue;
+                }
 
-#if UNITY_EDITOR
-        [ContextMenu("IntializeDictionary")]
-        public void EditorIntializeDictionary()
-        {
-            InitializeDictionary();
+                if (GoodTileTypes.Contains(data.Features[i].SoilType))
+                {
+                    tileScore += data.Features[i].FeatureStrength * GoodModifier;
+                    continue;
+                }
+
+                if (BadTileTypes.Contains(data.Features[i].SoilType))
+                {
+                    tileScore += data.Features[i].FeatureStrength * BadModifier;
+                    continue;
+                }
+
+                if (VeryBadTileTypes.Contains(data.Features[i].SoilType))
+                {
+                    tileScore += data.Features[i].FeatureStrength * VeryBadModifier;
+                    continue;
+                }
+            }
+
+            return tileScore;
         }
-#endif
     }
 }

@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace GGJRuntime
 {
     [System.Serializable]
@@ -11,6 +7,7 @@ namespace GGJRuntime
         Dirt = 10,
         Rock = 20,
         Magma = 30,
-        Water = 40
+        Water = 40,
+        Toxic = 50
     }
 }

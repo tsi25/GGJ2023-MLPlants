@@ -191,7 +191,10 @@ namespace GGJRuntime
         {
             SoilTileData data = GetDataByTileCoordinate(_testCoordinate);
             Debug.Log(data?.name);
-            //Debug.Log(data?.Features.Length);
+            if (data != null)
+            {
+                Debug.Log($"Tile point value : {FeatureCollection.GetPointsFromData(data)}");
+            }
         }
 
         [ContextMenu("LogTileAtWorldCoordinate")]
