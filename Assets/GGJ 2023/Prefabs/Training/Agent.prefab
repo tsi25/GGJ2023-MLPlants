@@ -361,7 +361,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2601674652650597385}
-  - component: {fileID: 3498295380934813805}
+  - component: {fileID: 2521085823568059541}
   - component: {fileID: 2601674652650597399}
   - component: {fileID: 2601674652650597396}
   m_Layer: 0
@@ -389,7 +389,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &3498295380934813805
+--- !u!114 &2521085823568059541
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -409,7 +409,7 @@ MonoBehaviour:
   _collection: {fileID: 11400000, guid: 8fc50f5d4ed75d3499e4b1d80586ce0f, type: 2}
   _movementSpeed: 1
   _turnSpeed: 85
-  _explorationCount: 15
+  _explorationCount: 25
   _failurePenality: -10
   _agentTurnInput: 0
   _simulatedTurnInput: 0
@@ -436,7 +436,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: d6e452586fba72f45848fedff80f261a, type: 3}
   m_InferenceDevice: 2
   m_BehaviorType: 0
   m_BehaviorName: GGJPlant
