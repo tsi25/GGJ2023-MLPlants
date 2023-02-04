@@ -42,7 +42,7 @@ namespace GGJRuntime
         private bool _debug = false; 
 
         private WaveFunctionCollapseTilemapLogic _cachedWFCGenerator = null;
-        private Dictionary<Vector3Int, SoilTileData> DataMap = new Dictionary<Vector3Int, SoilTileData>();
+        public Dictionary<Vector3Int, SoilTileData> DataMap = new Dictionary<Vector3Int, SoilTileData>();
 
         #region HELPERS
         /// <summary>
