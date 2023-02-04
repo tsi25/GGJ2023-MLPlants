@@ -70,11 +70,17 @@ namespace GGJRuntime
 
             Vector3Int currentPosition = _mapManager.GetTileCoordFromWorldCoord(transform.position);
 
+            List<Vector3Int> coordinates = new List<Vector3Int>();
+            coordinates.Add(currentPosition);
             var neighboringCoordinates = _mapManager.GetNeighboringTileCoords(currentPosition, true);
-
-            foreach(var neighboringCoordinate in neighboringCoordinates)
+            foreach (var neighboringCoordinate in neighboringCoordinates)
             {
-                var data = _mapManager.GetDataByTileCoordinate(neighboringCoordinate.TileCoordinate);
+                coordinates.Add(neighboringCoordinate.TileCoordinate);
+            }
+
+            foreach(Vector3Int coordinate in coordinates)
+            {
+                var data = _mapManager.GetDataByTileCoordinate(coordinate);
 
                 //if the tile is off the map, observe that its penalized
                 if (data == null)
@@ -84,7 +90,7 @@ namespace GGJRuntime
                 }
 
                 //if the tile has been visited, observe that its penalized
-                if(_visitedTiles.Contains(neighboringCoordinate.TileCoordinate))
+                if(_visitedTiles.Contains(coordinate))
                 {
                     sensor.AddObservation(_failurePenality);
                     continue;

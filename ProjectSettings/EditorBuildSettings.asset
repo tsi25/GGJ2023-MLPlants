@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/GGJ 2023/Scenes/Launch.unity
+    guid: b44cd874413e942468e7c729a5e43bec
   m_configObjects: {}
