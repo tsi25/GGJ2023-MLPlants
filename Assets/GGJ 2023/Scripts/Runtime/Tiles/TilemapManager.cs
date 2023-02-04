@@ -38,6 +38,8 @@ namespace GGJRuntime
         private Vector3 _testWorldCoord = Vector3.zero;
         [SerializeField]
         private Vector3Int _testCoordinate = Vector3Int.zero;
+        [SerializeField]
+        private bool _debug = false; 
 
         private WaveFunctionCollapseTilemapLogic _cachedWFCGenerator = null;
         private Dictionary<Vector3Int, SoilTileData> DataMap = new Dictionary<Vector3Int, SoilTileData>();
@@ -54,7 +56,9 @@ namespace GGJRuntime
         }
         public Vector3Int GetTileCoordFromWorldCoord(Vector3 worldPos)
         {
-            return GetTileCoordFromWorldCoord(new Vector2(worldPos.x, worldPos.y));
+            //return GetTileCoordFromWorldCoord(new Vector2(worldPos.x, worldPos.y));
+            if(_debug) Debug.Log("Vector3 int from world position : " + worldPos);
+            return Map.WorldToCell(worldPos);
         }
 
         /// <summary>
@@ -136,8 +140,6 @@ namespace GGJRuntime
 
             BoundsInt mapBounds = Map.cellBounds;
 
-            Debug.Log("Map Boudns : " + mapBounds);
-
             for (int x = mapBounds.xMin; x < mapBounds.xMax; x++)
             {
                 for (int y = mapBounds.yMin; y < mapBounds.yMax; y++)
@@ -210,15 +212,23 @@ namespace GGJRuntime
 
         public SoilTileData GetDataByTileCoordinate(Vector3Int coordinate)
         {
+            coordinate.z = 0;
+
             if (!DataMap.ContainsKey(coordinate))
             {
+                if (_debug) Debug.Log("DataMap does not contian a tile at coordinate : " + coordinate);
                 return null;
             }
+
+            if (_debug && DataMap[coordinate] == null) Debug.Log("fffffuuuuuuu");
+
             return DataMap[coordinate];
         }
+
         // Version of above function that takes world coord instead of tile coord
         public SoilTileData GetDataByWorldCoordinate(Vector3 worldCoordinate)
         {
+            
             return GetDataByTileCoordinate(GetTileCoordFromWorldCoord(worldCoordinate));
         }
 
