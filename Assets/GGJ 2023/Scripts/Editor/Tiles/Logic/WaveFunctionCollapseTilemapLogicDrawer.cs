@@ -8,7 +8,7 @@ namespace GGJEditor
     [CustomPropertyDrawer(typeof(WaveFunctionCollapseTilemapLogic))]
     public class WaveFunctionCollapseTilemapLogicDrawer : PropertyDrawer
     {
-        private Dictionary<int, SerializedObject> serializedObjects = new Dictionary<int, SerializedObject>();
+        //private Dictionary<int, SerializedObject> serializedObjects = new Dictionary<int, SerializedObject>();
         //private static Dictionary<int, Editor> editors = new Dictionary<int, Editor>();
         private Editor cachedEditor = null;
 
