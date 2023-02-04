@@ -17,8 +17,6 @@ namespace GGJRuntime
         protected override void Start()
         {
             base.Start();
-
-            quitButton.onClick.AddListener(OnQuitClicked);
         }
     }
 }
