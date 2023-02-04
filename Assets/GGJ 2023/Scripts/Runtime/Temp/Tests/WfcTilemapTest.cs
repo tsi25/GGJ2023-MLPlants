@@ -57,7 +57,7 @@ namespace GGJRuntime
         }*/
 
 
-        private void SolveGrid()
+        public void SolveGrid()
         {
             RuntimeLogic.GenerateGrid();
         }

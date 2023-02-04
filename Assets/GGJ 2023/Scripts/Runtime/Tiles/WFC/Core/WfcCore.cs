@@ -7,7 +7,7 @@ namespace GGJRuntime
         //Larger maps may run into issues with this value. If so, raise value as needed.
         private const int kInnerIterationCap = 5000;
 
-        public static bool DebugIterations = false;
+        public static bool DebugIterations = true;
 
         private OutputGrid outputGrid;
         private PatternManager patternManager;
