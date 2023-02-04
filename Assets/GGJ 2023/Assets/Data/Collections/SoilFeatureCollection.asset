@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: SoilFeatureCollection
   m_EditorClassIdentifier: 
   <VeryGoodTileTypes>k__BackingField: 28
-  <GoodTileTypes>k__BackingField: 0a
-  <BadTileTypes>k__BackingField: 1432
-  <VeryBadTileTypes>k__BackingField: 1e
+  <GoodTileTypes>k__BackingField: 
+  <BadTileTypes>k__BackingField: 0a
+  <VeryBadTileTypes>k__BackingField: 
   <VeryGoodModifier>k__BackingField: 1
   <GoodModifier>k__BackingField: 0.5
   <VeryBadModifier>k__BackingField: -1
