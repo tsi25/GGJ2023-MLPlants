@@ -408,11 +408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputTilemap: {fileID: 1497807419}
   outputTilemap: {fileID: 1559574613}
-  width: 10
-  height: 10
-  maxIterations: 1000
-  patternSize: 1
-  equalWeights: 0
+  logic: {fileID: 11400000, guid: 2f1139463c2b20548901f3fe7fbcb6f1, type: 2}
 --- !u!4 &1225289152
 Transform:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 {
     "name": "GGJ2023.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "GGJEditor",
     "references": [
         "GUID:fc4c55c6b6ccd024c8c1f6cc7b1c36d3"
     ],

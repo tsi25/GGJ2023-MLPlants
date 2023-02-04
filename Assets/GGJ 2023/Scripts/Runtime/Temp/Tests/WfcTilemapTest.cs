@@ -1,15 +1,19 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GGJRuntime
 {
     public class WfcTilemapTest : MonoBehaviour
     {
+        [Tooltip("Tilemap to sample from.")]
         public Tilemap inputTilemap = null;
+        [Tooltip("Tilemap to output generated maps to.")]
         public Tilemap outputTilemap = null;
-        public int width = 5;
+        [Tooltip("Logic asset driving map generation.")]
+        public WaveFunctionCollapseTilemapLogic logic = null;
+
+        private WaveFunctionCollapseTilemapLogic RuntimeLogic { get; set; }
+        /*public int width = 5;
         public int height = 5;
         public int maxIterations = 500;
         public int patternSize = 2;
@@ -24,7 +28,6 @@ namespace GGJRuntime
         {
             InputReader reader = new InputReader(inputTilemap);
             IValue<TileBase>[][] grid = reader.ReadInputToGrid();
-            //ValuesManager<TileBase> valuesManager = new ValuesManager<TileBase>(grid);
             valuesManager = new ValuesManager<TileBase>(grid);
             manager = new PatternManager(patternSize);
 
@@ -51,39 +54,20 @@ namespace GGJRuntime
             if(output.OutputImage == null) return;
 
 
+        }*/
+
+
+        private void SolveGrid()
+        {
+            RuntimeLogic.GenerateGrid();
         }
 
 
         private void Start()
         {
+            RuntimeLogic = logic.CreateRuntimeInstance(inputTilemap, outputTilemap);
+
             SolveGrid();
-
-            /*for(int row=0; row < grid.Length; row++)
-            {
-                for(int col=0; col < grid[0].Length; col++)
-                {
-                    Debug.Log($"Row: {row}\nCol: {col}\nTile: {grid[row][col].Value.name}");
-                }
-            }*/
-
-            /*StringBuilder output = new StringBuilder();
-            List<string> outputs = new List<string>();
-
-            for(int row=-1; row <= grid.Length; row++)
-            {
-                output.Clear();
-
-                for(int col = -1; col <= grid[0].Length; col++)
-                {
-                    output.Append(valuesManager.GetGridValuesIncludingOffset(col, row) + " ");
-                }
-
-                outputs.Add(output.ToString());
-            }
-
-            outputs.Reverse();
-
-            outputs.ForEach(s => Debug.Log(s));*/
         }
 
 

@@ -5,7 +5,9 @@ namespace GGJRuntime
     public class WfcCore
     {
         //Larger maps may run into issues with this value. If so, raise value as needed.
-        private const int kInnerIterationCap = 2000;
+        private const int kInnerIterationCap = 5000;
+
+        public static bool DebugIterations = false;
 
         private OutputGrid outputGrid;
         private PatternManager patternManager;
@@ -45,14 +47,14 @@ namespace GGJRuntime
 
                 if(solver.CheckForConflicts())
                 {
-                    Debug.LogWarning($"WFC: Conflict occured on iteration: {iteration}");
+                    if(DebugIterations) Debug.LogWarning($"WFC: Conflict occured on iteration: {iteration}");
                     iteration++;
                     outputGrid.ResetAllPossibilities();
                     solver = new CoreSolver(outputGrid, patternManager);
                 }
                 else
                 {
-                    Debug.Log($"WFC: Solved on: {iteration}");
+                    if(DebugIterations) Debug.Log($"WFC: Solved on: {iteration}");
                     //outputGrid.PrintResultsToConsole();
                     break;
                 }
@@ -60,7 +62,7 @@ namespace GGJRuntime
 
             if(iteration >= maxIterations)
             {
-                Debug.LogError($"WFC: Failed to solve tilemap!");
+                if(DebugIterations) Debug.LogError($"WFC: Failed to solve tilemap!");
             }
 
             return outputGrid.GetSolvedOutputGrid();
