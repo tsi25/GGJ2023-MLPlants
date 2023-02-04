@@ -39,6 +39,8 @@ namespace GGJRuntime
 
         protected Vector3Int _currentTilePosition = Vector3Int.zero;
 
+        protected int _visitedTileCount = 0;
+
         protected HashSet<Vector3Int> _visitedTiles = new HashSet<Vector3Int>();
 
         public Vector3 MovementVector
@@ -64,12 +66,6 @@ namespace GGJRuntime
             sensor.AddObservation(movementVector.x);
             sensor.AddObservation(movementVector.y);
 
-            if(_debug)
-            {
-                Debug.Log($"movement x : {movementVector.x}");
-                Debug.Log($"movement y : {movementVector.y}");
-            }
-
             sensor.AddObservation(_agentTurnInput);
 
             Vector3Int currentPosition = _mapManager.GetTileCoordFromWorldCoord(transform.position);
@@ -80,15 +76,22 @@ namespace GGJRuntime
             {
                 var data = _mapManager.GetDataByTileCoordinate(neighboringCoordinate.TileCoordinate);
 
+                //if the tile is off the map, observe that its penalized
                 if (data == null)
                 {
                     sensor.AddObservation(_failurePenality);
-                    if(_debug) Debug.Log($"{neighboringCoordinate.TileCoordinate} : {_failurePenality}");
                     continue;
                 }
 
+                //if the tile has been visited, observe that its penalized
+                if(_visitedTiles.Contains(neighboringCoordinate.TileCoordinate))
+                {
+                    sensor.AddObservation(_failurePenality);
+                    continue;
+                }
+
+                //otherwise observe the point value of the tile
                 sensor.AddObservation(_collection.GetPointsFromData(data));
-                if (_debug) Debug.Log($"{neighboringCoordinate.TileCoordinate} : {_collection.GetPointsFromData(data)}");
             }
         }
 
@@ -101,11 +104,13 @@ namespace GGJRuntime
             Vector3Int currentTilePosition = _mapManager.GetTileCoordFromWorldCoord(transform.position);
 
             //if we have visited this tile before and we are currently on this tile, return
-            if (_visitedTiles.Contains(currentTilePosition) && currentTilePosition != _currentTilePosition) return;
+            if (_visitedTiles.Contains(currentTilePosition) && currentTilePosition == _currentTilePosition) return;
 
             _currentTilePosition = currentTilePosition;
+            _visitedTileCount++;
 
-            if (_visitedTiles.Count > _explorationCount)
+            //if we have done the allotted amount of exploring we can end the episode and check our score
+            if (_visitedTileCount > _explorationCount)
             {
                 EndEpisode();
                 return;
@@ -114,6 +119,7 @@ namespace GGJRuntime
             //if we have already visited this tile, penalize the agent and return
             if (_visitedTiles.Contains(_currentTilePosition))
             {
+                if (_debug) Debug.Log("adding failure because the current tile has been visited already!");
                 AddReward(_failurePenality);
                 return;
             }
@@ -121,15 +127,21 @@ namespace GGJRuntime
             //we are visiting a new tile, add it to the set of visited tiles
             _visitedTiles.Add(currentTilePosition);
 
-            //if we are off the edge of the map, penalzie the agent
+            //if we are off the edge of the map, penalize the agent
             if (_mapManager.GetDataByWorldCoordinate(transform.position) == null)
             {
+                if (_debug)
+                {
+                    Debug.Log("adding failure because we have fallen off the map!");
+                }
+                
                 AddReward(_failurePenality);
             }
             //otherwise we are at a new tile and on the map, so add whatever that tile is worth
             else
             {
                 float points = _collection.GetPointsFromData(_mapManager.GetDataByTileCoordinate(currentTilePosition));
+                if (_debug) Debug.Log($"adding {points} points for hitting a valid new tile!");
                 AddReward(points);
             }
         }
@@ -157,6 +169,9 @@ namespace GGJRuntime
 
             _agentTurnInput = 0f;
             _simulatedTurnInput = 0f;
+
+            _visitedTileCount = 0;
+
             GetComponentInChildren<TrailRenderer>().Clear();
         }
         // =========== END REGION FIVE GOLDEN CALLBACKS =========== 
