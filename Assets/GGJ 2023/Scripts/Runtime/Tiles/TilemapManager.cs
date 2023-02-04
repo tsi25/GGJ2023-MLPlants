@@ -33,6 +33,22 @@ namespace GGJRuntime
 
         #region HELPERS
         /// <summary>
+        /// Returns array of ints representing [numTiles NORTH of pos, numTiles EAST of pos, numTiles SOUTH, numTiles, WEST]
+        /// </summary>
+        public int[] GetRemainingDepthInEachAxis(Vector3 worldPos)
+        {
+            int[] ans = new int[4] { 0, 0, 0, 0 };
+            Vector3Int tileCoord = GetTileCoordFromWorldCoord(worldPos);
+
+            ans[0] = Mathf.Abs(Map.cellBounds.yMax - tileCoord.y)-1;
+            ans[1] = Mathf.Abs(Map.cellBounds.xMax - tileCoord.x)-1;
+            ans[2] = Mathf.Abs(Map.cellBounds.yMin - tileCoord.y);
+            ans[3] = Mathf.Abs(Map.cellBounds.xMin - tileCoord.x);
+
+            return ans;
+        }
+
+        /// <summary>
         /// Takes in word position and returns the coordinate of the tile that contains that world position. Ignores Z-position
         /// </summary>
         public Vector3Int GetTileCoordFromWorldCoord(Vector2 worldPos)
@@ -49,7 +65,7 @@ namespace GGJRuntime
         /// <summary>
         /// Given in a TileCoordinate, returns the neighboring TileCoordinates and their relative directions, diagonals are optional
         /// </summary>
-        private List<NeighborCoord> GetNeighboringTileCoords(Vector3Int tileCoord, bool includeDiagonals = false)
+        public List<NeighborCoord> GetNeighboringTileCoords(Vector3Int tileCoord, bool includeDiagonals = false)
         {
             List<NeighborCoord> neighborCoords = new List<NeighborCoord>();
 
@@ -111,7 +127,7 @@ namespace GGJRuntime
 
             return neighborCoords;
         }
-        private List<NeighborCoord> GetNeighboringTileCoordsFromWorldCoord(Vector3 worldPos, bool includeDiagonals = false)
+        public List<NeighborCoord> GetNeighboringTileCoordsFromWorldCoord(Vector3 worldPos, bool includeDiagonals = false)
         {
             return GetNeighboringTileCoords(GetTileCoordFromWorldCoord(worldPos), includeDiagonals);
         }
@@ -170,7 +186,7 @@ namespace GGJRuntime
 
             BoundsInt mapBounds = Map.cellBounds;
 
-            Debug.Log("Map Boudns : " + mapBounds);
+            //Debug.Log("Map Boudns : " + mapBounds);
 
             for (int x = mapBounds.xMin; x < mapBounds.xMax; x++)
             {
@@ -192,7 +208,6 @@ namespace GGJRuntime
         {
             if (!DataMap.ContainsKey(coordinate))
             {
-                Debug.LogWarning($"No valid tile found at coordinate {coordinate}");
                 return null;
             }
             return DataMap[coordinate];
@@ -237,6 +252,11 @@ namespace GGJRuntime
 
             Debug.Log(msg);
             //Debug.Log(data?.Features.Length);
+
+            msg = "";
+            int[] depthRemaining = GetRemainingDepthInEachAxis(_testWorldCoord);
+            msg += $"North: {depthRemaining[0]}, East: {depthRemaining[1]}, South: {depthRemaining[2]}, West: {depthRemaining[3]}";
+            Debug.Log(msg);
         }
 
         [ContextMenu("Generate Super Random Map")]
@@ -257,7 +277,7 @@ namespace GGJRuntime
         /// <summary>
         /// When we get the neighbors of a tile lets us keep the neighboring tile coords together with the neighboring coords direction
         /// </summary>
-        private struct NeighborCoord
+        public struct NeighborCoord
         {
             public Vector3Int TileCoordinate;
             public NeighborDirections DirectionFromCaller;

@@ -16,8 +16,8 @@ MonoBehaviour:
   <GoodTileTypes>k__BackingField: 0a
   <BadTileTypes>k__BackingField: 1432
   <VeryBadTileTypes>k__BackingField: 1e
-  <VeryGoodModifier>k__BackingField: 1
-  <GoodModifier>k__BackingField: 0.5
+  <VeryGoodModifier>k__BackingField: 200
+  <GoodModifier>k__BackingField: 0
   <VeryBadModifier>k__BackingField: -1
   <BadModifier>k__BackingField: -0.5
   <SoilFeatures>k__BackingField:

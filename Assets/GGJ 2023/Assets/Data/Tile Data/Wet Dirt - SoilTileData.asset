@@ -15,5 +15,4 @@ MonoBehaviour:
   <Tile>k__BackingField: {fileID: 11400000, guid: cc7fcacdc6e7b8d4c82e8cc4a01108c3, type: 2}
   <Features>k__BackingField:
   - {fileID: 11400000, guid: 96778e6d2f0392a488d9d9349d378395, type: 2}
-  - {fileID: 11400000, guid: b6b39ce1d5c62b84f9c43ca46f4f3fd2, type: 2}
   SelectionBias: 4

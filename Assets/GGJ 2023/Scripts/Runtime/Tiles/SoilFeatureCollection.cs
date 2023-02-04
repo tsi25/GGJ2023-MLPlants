@@ -69,7 +69,7 @@ namespace GGJRuntime
 
             //loop through each tile feature and update the tile score to reflect the given score of the tile
             //result must be a normalized value between -1.0 and 1.0
-
+            
             for (int i = 0; i < data.Features.Length; i++)
             {
                 if (VeryGoodTileTypes.Contains(data.Features[i].SoilType))
