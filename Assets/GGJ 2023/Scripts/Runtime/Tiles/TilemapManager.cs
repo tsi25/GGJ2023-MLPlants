@@ -163,6 +163,30 @@ namespace GGJRuntime
                 }
             }
         }
+
+        public void GenerateBetterRandomMap()
+        {
+            DataMap.Clear();
+
+            BoundsInt mapBounds = Map.cellBounds;
+
+            Debug.Log("Map Boudns : " + mapBounds);
+
+            for (int x = mapBounds.xMin; x < mapBounds.xMax; x++)
+            {
+                for (int y = mapBounds.yMin; y < mapBounds.yMax; y++)
+                {
+                    Vector3Int coordinates = new Vector3Int(x, y, 0);
+
+                    Map.SetTile(coordinates, FeatureCollection.GetRandomBiasedFeature().Tile);
+
+                    TileBase tile = Map.GetTile(coordinates);
+                    SoilTileData data = FeatureCollection.GetDataByTile(tile);
+
+                    DataMap.Add(new Vector3Int(x, y, 0), data);
+                }
+            }
+        }
         
         public SoilTileData GetDataByTileCoordinate(Vector3Int coordinate)
         {

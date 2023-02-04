@@ -99,5 +99,25 @@ namespace GGJRuntime
 
             return tileScore;
         }
+
+        public SoilTileData GetRandomBiasedFeature()
+        {
+            float maxValue = 0f;
+
+            foreach(SoilTileData feature in SoilFeatures)
+            {
+                maxValue += feature.SelectionBias;
+            }
+
+            float selection = Random.Range(0f, maxValue);
+
+            foreach (SoilTileData feature in SoilFeatures)
+            {
+                selection -= feature.SelectionBias;
+                if (selection <= 0f) return feature;
+            }
+
+            return SoilFeatures[SoilFeatures.Length - 1];
+        }
     }
 }
