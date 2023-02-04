@@ -19,5 +19,11 @@ namespace GGJRuntime
         /// </summary>
         [field: SerializeField, Tooltip("Each feature associated with a tile")]
         public BaseSoilFeature[] Features { get; private set; } = null;
+
+        /// <summary>
+        /// Bias applied to this tile when generating tiles randomly
+        /// </summary>
+        [field: SerializeField, Tooltip("Bias applied to this tile when generating tiles randomly")]
+        public float SelectionBias = 1f;
     }
 }
