@@ -361,7 +361,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2601674652650597385}
-  - component: {fileID: 3498295380934813805}
+  - component: {fileID: 7131396125811983105}
   - component: {fileID: 2601674652650597399}
   - component: {fileID: 2601674652650597396}
   m_Layer: 0
@@ -389,7 +389,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &3498295380934813805
+--- !u!114 &7131396125811983105
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -398,22 +398,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 2601674652650597392}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9daa8263fac12b4187402d4aece15e9, type: 3}
+  m_Script: {fileID: 11500000, guid: af0026f217903d544a144422c5f8535b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 5000
+  MaxStep: 1000
   _mapManager: {fileID: 0}
   _collection: {fileID: 11400000, guid: 8fc50f5d4ed75d3499e4b1d80586ce0f, type: 2}
   _movementSpeed: 1
-  _turnSpeed: 85
-  _explorationCount: 15
-  _failurePenality: -10
+  _turnSpeed: 90
+  _victoryThreshold: 10
+  _failureThreshold: -10
+  _explorationCount: 25
   _agentTurnInput: 0
   _simulatedTurnInput: 0
-  _debug: 0
 --- !u!114 &2601674652650597399
 MonoBehaviour:
   m_ObjectHideFlags: 0

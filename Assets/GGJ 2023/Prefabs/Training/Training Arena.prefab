@@ -1111,6 +1111,10 @@ PrefabInstance:
       propertyPath: _showGizmos
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7131396125811983105, guid: c6a94ca90cd66e04c8e41948740bd441, type: 3}
+      propertyPath: _mapManager
+      value: 
+      objectReference: {fileID: 750276046254396181}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
