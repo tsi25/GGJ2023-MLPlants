@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea33ef99e1b76024098b8c8252c05dc0, type: 3}
+  m_Name: SoilFeatureCollection_SIMPLE
+  m_EditorClassIdentifier: 
+  <VeryGoodTileTypes>k__BackingField: 28
+  <GoodTileTypes>k__BackingField: 0a
+  <BadTileTypes>k__BackingField: 1432
+  <VeryBadTileTypes>k__BackingField: 1e
+  <VeryGoodModifier>k__BackingField: 1
+  <GoodModifier>k__BackingField: -0.1
+  <VeryBadModifier>k__BackingField: -1
+  <BadModifier>k__BackingField: -0.5
+  <SoilFeatures>k__BackingField:
+  - {fileID: 11400000, guid: 9da6800bc3c58f94da926248e51b3484, type: 2}
+  - {fileID: 11400000, guid: 671e55fcbde545344b8e49510e08d70e, type: 2}
+  - {fileID: 11400000, guid: 0da9a4421151aff4789b5b5e86e92d35, type: 2}
+  - {fileID: 11400000, guid: 7e94ab8702907474f9d33a1e68c4161f, type: 2}
+  - {fileID: 11400000, guid: 2e2c39fc8bd2aeb459c6fe7a6167a12a, type: 2}
+  - {fileID: 11400000, guid: c557b3c06270968468061c8cf8bf8b04, type: 2}
+  - {fileID: 11400000, guid: 5a1cf186095399f4ea4be44ce537fcd9, type: 2}
+  - {fileID: 11400000, guid: 42222f727207a794eb66d0fc7d297896, type: 2}

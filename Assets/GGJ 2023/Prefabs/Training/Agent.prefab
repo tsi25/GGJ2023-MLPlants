@@ -406,7 +406,7 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   MaxStep: 1000
   _mapManager: {fileID: 0}
-  _collection: {fileID: 11400000, guid: 8fc50f5d4ed75d3499e4b1d80586ce0f, type: 2}
+  _collection: {fileID: 11400000, guid: 0538bdae1c8764543a3f360335c838f5, type: 2}
   _movementSpeed: 1
   _turnSpeed: 90
   _victoryThreshold: 10
@@ -414,6 +414,8 @@ MonoBehaviour:
   _explorationCount: 25
   _agentTurnInput: 0
   _simulatedTurnInput: 0
+  _debug: 0
+  _numSteps: 0
 --- !u!114 &2601674652650597399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,8 +429,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 12
-    NumStackedVectorObservations: 3
+    VectorObservationSize: 19
+    NumStackedVectorObservations: 10
     m_ActionSpec:
       m_NumContinuousActions: 1
       BranchSizes: 

@@ -38,13 +38,23 @@ namespace GGJRuntime
         [SerializeField]
         protected float _simulatedTurnInput = 0f;
 
+        public bool _debug = false;
+
+        [SerializeField]
+        protected int _numSteps = 0;
         protected float _currentScore = 0f;
         protected Vector3 _cachedStartPosition = Vector3.zero;
         protected Vector3 _cachedStartRotation = Vector3.zero;
         protected Vector3 _currentPosition = Vector3.zero;
+        protected Vector3 _currentTilePosition;
         protected HashSet<Vector3Int> _visitedTiles = new HashSet<Vector3Int>();
 
-        private List<TileInfo> _specialTiles = new List<TileInfo>();
+        private Vector3 _movementVector = Vector3.zero;
+        // map bounds to not go out of bounds and not worry about it
+        private float _minXBound;
+        private float _maxXBound;
+        private float _minYBound;
+        private float _maxYBound;
 
         // =========== REGION FIVE GOLDEN CALLBACKS =========== 
         public override void Initialize()
@@ -57,12 +67,10 @@ namespace GGJRuntime
         {
             _mapManager.GenerateBetterRandomMap();
 
-            // Populate agent's omniscient info
-            Vector3Int[] keys = _mapManager.DataMap.Keys.ToArray<Vector3Int>();
-            for (int i = 0; i < keys.Length; i++)
-            {
-                //if (_mapManager.DataMap[keys[i]].Features.Contains() )
-            }
+            _minXBound = _mapManager.Map.cellBounds.xMin + 0.01f;
+            _maxXBound = _mapManager.Map.cellBounds.xMax - 0.01f;
+            _minYBound = _mapManager.Map.cellBounds.yMin + 0.01f;
+            _maxYBound = _mapManager.Map.cellBounds.yMax - 0.01f;
 
             _visitedTiles.Clear();
 
@@ -73,16 +81,46 @@ namespace GGJRuntime
             _agentTurnInput = 0f;
             _simulatedTurnInput = 0f;
 
+            _numSteps = 0;
             _currentScore = 0f;
             GetComponentInChildren<TrailRenderer>().Clear();
         }
 
         public override void CollectObservations(VectorSensor sensor)
         {
-            // Agent can know its own position and orientation
-            sensor.AddObservation(transform.position);
-            sensor.AddObservation(transform.rotation);
+            // Agent can know its movement vector
+            sensor.AddObservation(_movementVector.x);
+            sensor.AddObservation(_movementVector.y);
 
+            float distance;
+            float score;
+            SoilTileData tileData;
+
+            // Agent knows the score of the tile it is on and getting rewarded for
+            tileData = _mapManager.GetDataByWorldCoordinate(transform.position);
+            sensor.AddObservation(_collection.GetPointsFromData(tileData));
+
+            // Agent knows distance to each of its neighbors
+            List<TilemapManager.NeighborCoord> neighbors = _mapManager.GetNeighboringTileCoordsFromWorldCoord(transform.position, includeDiagonals: true);
+            for (int i = 0; i < neighbors.Count; i++)
+            {
+                tileData = _mapManager.GetDataByTileCoordinate(neighbors[i].TileCoordinate);
+
+                if (tileData == null) //neighbor is off the map
+                    score = 0;// _collection.VeryBadModifier; //Trying 0 out so that it can distinguish between no-tile and some-tile
+                else
+                    score = _collection.GetPointsFromData(tileData);
+
+                distance = Vector3.Distance(_mapManager.Map.CellToWorld(neighbors[i].TileCoordinate), transform.position);
+
+                if (_debug)
+                {
+                    Debug.Log($"To the {neighbors[i].DirectionFromCaller.ToString()}, tile is WORTH: {score} and DISTANCE: {distance}");
+                }
+                sensor.AddObservation(score);
+                sensor.AddObservation(distance);
+            }
+            
             #region TAYLOR_REF
             //sensor.AddObservation(MovementVector.x);
             //sensor.AddObservation(MovementVector.y);
@@ -115,44 +153,25 @@ namespace GGJRuntime
 
         public override void OnActionReceived(ActionBuffers actions)
         {
-
             //check if we need to turn
             _agentTurnInput = actions.ContinuousActions[0];
 
-            #region TAYLOR_REF
-            ////check if we're dead because we have fallen off the map
-            //if (_mapManager.GetDataByWorldCoordinate(transform.position) == null)
-            //{
-            //    EndEpisode();
-            //}
+            // Handle moving into a new tile
+            Vector3Int currentTilePosition = _mapManager.GetTileCoordFromWorldCoord(transform.position);
 
-            ////check if we're dead because we have crossed ourselves
-            //Vector3Int currentTilePosition = _mapManager.GetTileCoordFromWorldCoord(transform.position);
-            //if (_visitedTiles.Contains(currentTilePosition))
-            //{
-            //    if (currentTilePosition != _currentTilePosition)
-            //    {
-            //        EndEpisode();
-            //    }
+            // You get the points for the tile your on for as long as you're on it
+            float points = _collection.GetPointsFromData(_mapManager.GetDataByTileCoordinate(currentTilePosition));
+            AddReward(points);
+            _currentScore += points;
 
-            //    return;
-            //}
+            if (currentTilePosition == _currentTilePosition) // haven't moved into new tile yet
+                return;
 
-            //float points = _collection.GetPointsFromData(_mapManager.GetDataByTileCoordinate(currentTilePosition));
+            _currentTilePosition = currentTilePosition;
 
-            //AddReward(points);
-
-            //_visitedTiles.Add(currentTilePosition);
-
-            //_currentScore += points;
-            //_currentTilePosition = currentTilePosition;
-
-            //if (_visitedTiles.Count > _explorationCount)
-            //{
-            //    EndEpisode();
-            //    return;
-            //}
-            #endregion
+            // Stepping into a new tile this frame
+            if (!_visitedTiles.Contains(currentTilePosition))
+                _visitedTiles.Add(currentTilePosition);
         }
 
         public override void Heuristic(in ActionBuffers actionsOut)
@@ -167,19 +186,17 @@ namespace GGJRuntime
 
         // =========== END REGION FIVE GOLDEN CALLBACKS =========== 
 
-        /// <summary>
-        /// Contains a tile's score and world position
-        /// </summary>
-        private struct TileInfo
-        {
-            public Vector2 Position;
-            public float Score;
-        }
-
         protected virtual void Update()
         {
-            transform.Translate(_movementSpeed * Time.deltaTime * transform.forward, Space.World);
             transform.Rotate(new Vector3(0f, Mathf.Clamp(_agentTurnInput + _simulatedTurnInput, -1f, 1f) * _turnSpeed * Time.deltaTime, 0f));
+
+            // Movement clamped to the grid. Grid has to be rectangular
+            Vector3 newLocalPos = transform.localPosition;
+            newLocalPos += _movementSpeed * Time.deltaTime * transform.forward;
+            newLocalPos.x = Mathf.Clamp(newLocalPos.x, _minXBound, _maxXBound);
+            newLocalPos.y = Mathf.Clamp(newLocalPos.y, _minYBound, _maxYBound);
+            _movementVector = newLocalPos - transform.localPosition;
+            transform.localPosition = newLocalPos;
         }
 
         [ContextMenu("Clear Trail Renderer")]

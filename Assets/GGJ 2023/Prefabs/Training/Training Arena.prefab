@@ -307,6 +307,7 @@ MonoBehaviour:
   <UseDiagonals>k__BackingField: 1
   _testWorldCoord: {x: -2.31, y: 4.42, z: 0}
   _testCoordinate: {x: -3, y: 2, z: 0}
+  _debug: 0
 --- !u!1 &750276046438544654
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,7 +1058,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2601674652650597385, guid: c6a94ca90cd66e04c8e41948740bd441, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15
+      value: 14.98
       objectReference: {fileID: 0}
     - target: {fileID: 2601674652650597385, guid: c6a94ca90cd66e04c8e41948740bd441, type: 3}
       propertyPath: m_LocalPosition.z

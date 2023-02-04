@@ -57,7 +57,7 @@ namespace GGJRuntime
         public Vector3Int GetTileCoordFromWorldCoord(Vector3 worldPos)
         {
             //return GetTileCoordFromWorldCoord(new Vector2(worldPos.x, worldPos.y));
-            if(_debug) Debug.Log("Vector3 int from world position : " + worldPos);
+            //if(_debug) Debug.Log("Vector3 int from world position : " + worldPos);
             return Map.WorldToCell(worldPos);
         }
 

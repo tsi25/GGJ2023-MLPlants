@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Tile>k__BackingField: {fileID: 11400000, guid: 127b614fc61d8dc4e9dcc7dc0b886cd7, type: 2}
   <Features>k__BackingField:
-  - {fileID: 11400000, guid: 96778e6d2f0392a488d9d9349d378395, type: 2}
   - {fileID: 11400000, guid: aafa225e489dc5749b0121fa0ef16fa6, type: 2}
+  SelectionBias: 1
