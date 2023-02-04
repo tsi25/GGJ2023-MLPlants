@@ -8,7 +8,7 @@ using Unity.MLAgents.Policies;
 
 namespace GGJRuntime
 {
-    public class FirstAgent : Agent
+    public class TileAdjacencyAgent : Agent
     {
         [Header("Managers & Scriptables")]
         [SerializeField]
@@ -21,38 +21,30 @@ namespace GGJRuntime
         protected float _movementSpeed = 1f;
         [SerializeField]
         protected float _turnSpeed = 1f;
-        [SerializeField]
-        protected float _revisitValue = -0.1f;
-        [SerializeField]
-        protected float _deathTileThreshold = -5f;
-        [SerializeField]
-        protected float _victoryThreshold = 10f;
-        [SerializeField]
-        protected float _failureThreshold = 10f;
-        [SerializeField]
-        protected float _failurePenality = 100f;
+
         [SerializeField]
         protected float _explorationCount = 25;
-
-        //TODO this casn be more performant by deriving it mathematically
         [SerializeField]
-        protected Transform[] _sensorPositions = new Transform[0];
+        protected float _failurePenality = -10f;
+
         [SerializeField]
         protected float _agentTurnInput = 0f;
         [SerializeField]
         protected float _simulatedTurnInput = 0f;
+        [SerializeField]
+        protected bool _debug = false;
 
-        protected float _currentScore = 0f;
         protected Vector3 _cachedStartPosition = Vector3.zero;
         protected Vector3 _cachedStartRotation = Vector3.zero;
+
         protected Vector3Int _currentTilePosition = Vector3Int.zero;
-        protected HashSet<Vector3Int> _visitedTiles = new HashSet<Vector3Int>(); 
+
+        protected HashSet<Vector3Int> _visitedTiles = new HashSet<Vector3Int>();
 
         public Vector3 MovementVector
         {
             get { return (_movementSpeed * Time.deltaTime) * transform.forward; }
         }
-
 
         // =========== REGION FIVE GOLDEN CALLBACKS =========== 
         public override void Initialize()
@@ -65,60 +57,71 @@ namespace GGJRuntime
 
         public override void CollectObservations(VectorSensor sensor)
         {
-            sensor.AddObservation(MovementVector.x);
-            sensor.AddObservation(MovementVector.y);
-            sensor.AddObservation(MovementVector.z);
+            base.CollectObservations(sensor);
 
-            foreach (Transform sensorPosition in _sensorPositions)
+            Vector3 movementVector = MovementVector;
+
+            sensor.AddObservation(movementVector.x);
+            sensor.AddObservation(movementVector.y);
+
+            if(_debug)
             {
-                var data = _mapManager.GetDataByWorldCoordinate(sensorPosition.position);
-                
+                Debug.Log($"movement x : {movementVector.x}");
+                Debug.Log($"movement y : {movementVector.y}");
+            }
+
+            sensor.AddObservation(_agentTurnInput);
+
+            Vector3Int currentPosition = _mapManager.GetTileCoordFromWorldCoord(transform.position);
+
+            var neighboringCoordinates = _mapManager.GetNeighboringTileCoords(currentPosition, true);
+
+            foreach(var neighboringCoordinate in neighboringCoordinates)
+            {
+                var data = _mapManager.GetDataByTileCoordinate(neighboringCoordinate.TileCoordinate);
+
                 if (data == null)
                 {
-                    sensor.AddObservation(_deathTileThreshold);
-                    continue;
-                }
-
-                Vector3Int worldCoordinate = _mapManager.GetTileCoordFromWorldCoord(sensorPosition.position);
-                if (_visitedTiles.Contains(worldCoordinate))
-                {
-                    sensor.AddObservation(_revisitValue);
+                    sensor.AddObservation(_failurePenality);
+                    if(_debug) Debug.Log($"{neighboringCoordinate.TileCoordinate} : {_failurePenality}");
                     continue;
                 }
 
                 sensor.AddObservation(_collection.GetPointsFromData(data));
+                if (_debug) Debug.Log($"{neighboringCoordinate.TileCoordinate} : {_collection.GetPointsFromData(data)}");
             }
-            
-            base.CollectObservations(sensor);
         }
 
         public override void OnActionReceived(ActionBuffers actions)
         {
+            base.OnActionReceived(actions);
+
+            //check if we need to turn
+            _agentTurnInput = actions.ContinuousActions[0];
+            Vector3Int currentTilePosition = _mapManager.GetTileCoordFromWorldCoord(transform.position);
+
             //check if we're dead because we have fallen off the map
             if (_mapManager.GetDataByWorldCoordinate(transform.position) == null)
             {
-                EndEpisode();
+                AddReward(_failurePenality);
+                //EndEpisode();
             }
-
             //check if we're dead because we have crossed ourselves
-            Vector3Int currentTilePosition = _mapManager.GetTileCoordFromWorldCoord(transform.position);
-            if (_visitedTiles.Contains(currentTilePosition))
+            else if (_visitedTiles.Contains(currentTilePosition))
             {
-                if(currentTilePosition != _currentTilePosition)
+                if (currentTilePosition != _currentTilePosition)
                 {
-                    EndEpisode();
+                    AddReward(_failurePenality);
+                    //EndEpisode();
                 }
-
-                return;
             }
-
-            float points = _collection.GetPointsFromData(_mapManager.GetDataByTileCoordinate(currentTilePosition));
-
-            AddReward(points);
+            else
+            {
+                float points = _collection.GetPointsFromData(_mapManager.GetDataByTileCoordinate(currentTilePosition));
+                AddReward(points);
+            }
 
             _visitedTiles.Add(currentTilePosition);
-
-            _currentScore += points;
             _currentTilePosition = currentTilePosition;
 
             if (_visitedTiles.Count > _explorationCount)
@@ -126,11 +129,6 @@ namespace GGJRuntime
                 EndEpisode();
                 return;
             }
-
-            //check if we need to turn
-            _agentTurnInput = actions.ContinuousActions[0];
-
-            base.OnActionReceived(actions);
         }
 
         public override void Heuristic(in ActionBuffers actionsOut)
@@ -156,28 +154,14 @@ namespace GGJRuntime
 
             _agentTurnInput = 0f;
             _simulatedTurnInput = 0f;
-
-            _currentScore = 0f;
             GetComponentInChildren<TrailRenderer>().Clear();
         }
         // =========== END REGION FIVE GOLDEN CALLBACKS =========== 
-
-        protected virtual void FailSession()
-        {
-            AddReward(_failurePenality);
-            EndEpisode();
-        }
 
         protected virtual void Update()
         {
             transform.Translate(MovementVector, Space.World);
             transform.Rotate(new Vector3(0f, Mathf.Clamp(_agentTurnInput + _simulatedTurnInput, -1f, 1f) * _turnSpeed * Time.deltaTime, 0f));
-        }
-
-        [ContextMenu("Clear Trail Renderer")]
-        private void EditorClearTrailRenderer()
-        {
-            GetComponentInChildren<TrailRenderer>().Clear();
         }
     }
 }

@@ -49,7 +49,7 @@ namespace GGJRuntime
         /// <summary>
         /// Given in a TileCoordinate, returns the neighboring TileCoordinates and their relative directions, diagonals are optional
         /// </summary>
-        private List<NeighborCoord> GetNeighboringTileCoords(Vector3Int tileCoord, bool includeDiagonals = false)
+        public List<NeighborCoord> GetNeighboringTileCoords(Vector3Int tileCoord, bool includeDiagonals = false)
         {
             List<NeighborCoord> neighborCoords = new List<NeighborCoord>();
 
@@ -111,7 +111,7 @@ namespace GGJRuntime
 
             return neighborCoords;
         }
-        private List<NeighborCoord> GetNeighboringTileCoordsFromWorldCoord(Vector3 worldPos, bool includeDiagonals = false)
+        public List<NeighborCoord> GetNeighboringTileCoordsFromWorldCoord(Vector3 worldPos, bool includeDiagonals = false)
         {
             return GetNeighboringTileCoords(GetTileCoordFromWorldCoord(worldPos), includeDiagonals);
         }
@@ -170,8 +170,6 @@ namespace GGJRuntime
 
             BoundsInt mapBounds = Map.cellBounds;
 
-            Debug.Log("Map Boudns : " + mapBounds);
-
             for (int x = mapBounds.xMin; x < mapBounds.xMax; x++)
             {
                 for (int y = mapBounds.yMin; y < mapBounds.yMax; y++)
@@ -192,7 +190,6 @@ namespace GGJRuntime
         {
             if (!DataMap.ContainsKey(coordinate))
             {
-                Debug.LogWarning($"No valid tile found at coordinate {coordinate}");
                 return null;
             }
             return DataMap[coordinate];
@@ -206,6 +203,7 @@ namespace GGJRuntime
         private void Start()
         {
             CalculateMap();
+
         }
 
 #if UNITY_EDITOR
@@ -245,6 +243,12 @@ namespace GGJRuntime
             GenerateSuperRandomMap();
         }
 
+        [ContextMenu("Generate Super Random Map")]
+        public void EditorGenerateBetterRandomMap()
+        {
+            GenerateBetterRandomMap();
+        }
+
         Vector3Int _testWorldCoord_TileCoord;
         private void OnDrawGizmos()
         {
@@ -257,7 +261,7 @@ namespace GGJRuntime
         /// <summary>
         /// When we get the neighbors of a tile lets us keep the neighboring tile coords together with the neighboring coords direction
         /// </summary>
-        private struct NeighborCoord
+        public struct NeighborCoord
         {
             public Vector3Int TileCoordinate;
             public NeighborDirections DirectionFromCaller;
