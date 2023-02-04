@@ -100,34 +100,37 @@ namespace GGJRuntime
             _agentTurnInput = actions.ContinuousActions[0];
             Vector3Int currentTilePosition = _mapManager.GetTileCoordFromWorldCoord(transform.position);
 
-            //check if we're dead because we have fallen off the map
-            if (_mapManager.GetDataByWorldCoordinate(transform.position) == null)
-            {
-                AddReward(_failurePenality);
-                //EndEpisode();
-            }
-            //check if we're dead because we have crossed ourselves
-            else if (_visitedTiles.Contains(currentTilePosition))
-            {
-                if (currentTilePosition != _currentTilePosition)
-                {
-                    AddReward(_failurePenality);
-                    //EndEpisode();
-                }
-            }
-            else
-            {
-                float points = _collection.GetPointsFromData(_mapManager.GetDataByTileCoordinate(currentTilePosition));
-                AddReward(points);
-            }
+            //if we have visited this tile before and we are currently on this tile, return
+            if (_visitedTiles.Contains(currentTilePosition) && currentTilePosition != _currentTilePosition) return;
 
-            _visitedTiles.Add(currentTilePosition);
             _currentTilePosition = currentTilePosition;
 
             if (_visitedTiles.Count > _explorationCount)
             {
                 EndEpisode();
                 return;
+            }
+
+            //if we have already visited this tile, penalize the agent and return
+            if (_visitedTiles.Contains(_currentTilePosition))
+            {
+                AddReward(_failurePenality);
+                return;
+            }
+
+            //we are visiting a new tile, add it to the set of visited tiles
+            _visitedTiles.Add(currentTilePosition);
+
+            //if we are off the edge of the map, penalzie the agent
+            if (_mapManager.GetDataByWorldCoordinate(transform.position) == null)
+            {
+                AddReward(_failurePenality);
+            }
+            //otherwise we are at a new tile and on the map, so add whatever that tile is worth
+            else
+            {
+                float points = _collection.GetPointsFromData(_mapManager.GetDataByTileCoordinate(currentTilePosition));
+                AddReward(points);
             }
         }
 
@@ -145,7 +148,7 @@ namespace GGJRuntime
         {
             base.OnEpisodeBegin();
 
-            _mapManager.GenerateBetterRandomMap();
+            _mapManager.GenerateWFCMap();
 
             _visitedTiles.Clear();
 

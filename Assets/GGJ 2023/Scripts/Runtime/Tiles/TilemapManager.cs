@@ -13,10 +13,20 @@ namespace GGJRuntime
         [field: SerializeField, Tooltip("Map managed by the tile manager"), Header("References")]
         public Tilemap Map { get; private set; } = null;
         /// <summary>
+        /// Source map used to generate the play area
+        /// </summary>
+        [field: SerializeField, Tooltip("Source map used to generate the play area")]
+        public Tilemap SourceMap { get; private set; } = null;
+        /// <summary>
         /// Feature collection correlating particular tiles with their attributes
         /// </summary>
         [field: SerializeField, Tooltip("Feature collection correlating particular tiles with their attributes")]
         public SoilFeatureCollection FeatureCollection { get; private set; } = null;
+        /// <summary>
+        /// Component used to generate WFC maps
+        /// </summary>
+        [field: SerializeField, Tooltip("Component used to generate WFC maps")]
+        public WaveFunctionCollapseTilemapLogic WFCGenerator { get; private set; } = null;
 
         /// <summary>
         /// When TRUE, Diagonals are considered neighbors
@@ -29,6 +39,7 @@ namespace GGJRuntime
         [SerializeField]
         private Vector3Int _testCoordinate = Vector3Int.zero;
 
+        private WaveFunctionCollapseTilemapLogic _cachedWFCGenerator = null;
         private Dictionary<Vector3Int, SoilTileData> DataMap = new Dictionary<Vector3Int, SoilTileData>();
 
         #region HELPERS
@@ -185,7 +196,18 @@ namespace GGJRuntime
                 }
             }
         }
-        
+
+        public void GenerateWFCMap()
+        {
+            DataMap.Clear();
+
+            Map.ClearAllTiles();
+            _cachedWFCGenerator.GenerateGrid();
+
+            CalculateMap();
+        }
+
+
         public SoilTileData GetDataByTileCoordinate(Vector3Int coordinate)
         {
             if (!DataMap.ContainsKey(coordinate))
@@ -202,12 +224,12 @@ namespace GGJRuntime
 
         private void Start()
         {
-            CalculateMap();
-
+            _cachedWFCGenerator = WFCGenerator.CreateRuntimeInstance(SourceMap, Map);
+            GenerateWFCMap();
         }
 
 #if UNITY_EDITOR
-         
+
         [ContextMenu("LogTileAtCoordinate")]
         public void LogTileAtCoordinate()
         {
@@ -243,10 +265,16 @@ namespace GGJRuntime
             GenerateSuperRandomMap();
         }
 
-        [ContextMenu("Generate Super Random Map")]
+        [ContextMenu("Generate Better Random Map")]
         public void EditorGenerateBetterRandomMap()
         {
             GenerateBetterRandomMap();
+        }
+
+        [ContextMenu("Generate WFC Map")]
+        public void EditorGenerateWFCMap()
+        {
+            GenerateWFCMap();
         }
 
         Vector3Int _testWorldCoord_TileCoord;
