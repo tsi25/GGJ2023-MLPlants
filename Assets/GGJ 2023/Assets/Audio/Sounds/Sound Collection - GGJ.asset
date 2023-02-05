@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: Sound Collection - GGJ
   m_EditorClassIdentifier: 
   sounds:
+  - id: 50
+    type: 1
+    clip: {fileID: 8300000, guid: e4d421e14a31931469b8a3f6cb77ef8b, type: 3}
+    spatialBlend: 0
+    volume: 0.05
+    limit: 0
   - id: 100
     type: 0
     clip: {fileID: 8300000, guid: d5b8ddc7b8ed4a64abd8ef1cbc8630d7, type: 3}

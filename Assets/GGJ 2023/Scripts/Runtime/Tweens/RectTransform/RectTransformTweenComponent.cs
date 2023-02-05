@@ -3,7 +3,7 @@ using UnityEngine;
 namespace GGJRuntime
 {
     [RequireComponent(typeof(RectTransform))]
-    public class RectTransformTweenComponent : TweenComponent
+    public abstract class RectTransformTweenComponent : TweenComponent
     {
         [System.NonSerialized]
         private RectTransform _rectTransform = null;

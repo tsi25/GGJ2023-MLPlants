@@ -3,7 +3,7 @@ using DG.Tweening;
 
 namespace GGJRuntime
 {
-    public class TweenComponent : MonoBehaviour
+    public abstract class TweenComponent : MonoBehaviour
     {
         public bool playOnEnable = false;
         public float duration = 1f;
@@ -14,9 +14,15 @@ namespace GGJRuntime
 
         public string InstanceGUID { get; protected set; }
 
-        public virtual void StartTween(bool reset=false)
+        public virtual void StartTween(System.Action callback=null, bool reset=false)
         {
             StopTween();
+
+            Tween tween = CreateTween();
+
+            if(callback != null) tween.OnComplete(() => { callback.Invoke(); });
+
+            InitializeTween(tween);
         }
 
 
@@ -26,6 +32,9 @@ namespace GGJRuntime
 
             if(DOTween.IsTweening(InstanceGUID)) DOTween.Kill(InstanceGUID);
         }
+
+
+        protected abstract Tween CreateTween();
 
 
         protected virtual void InitializeTween(Tween tween)
@@ -46,7 +55,7 @@ namespace GGJRuntime
 
         protected virtual void OnEnable()
         {
-            if(playOnEnable) StartTween(true);
+            if(playOnEnable) StartTween(null, true);
         }
 
 

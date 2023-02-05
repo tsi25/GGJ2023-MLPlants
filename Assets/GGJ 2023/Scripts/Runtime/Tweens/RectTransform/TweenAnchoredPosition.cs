@@ -8,14 +8,11 @@ namespace GGJRuntime
         public Vector2 start = Vector2.zero;
         public Vector2 end = Vector2.zero;
 
-        public override void StartTween(bool reset = false)
+
+        protected override Tween CreateTween()
         {
-            base.StartTween(reset);
-
             rectTransform.anchoredPosition = start;
-            Tween tween = rectTransform.DOAnchorPos(end, duration);
-
-            InitializeTween(tween);
+            return rectTransform.DOAnchorPos(end, duration);
         }
     }
 }

@@ -862,7 +862,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1325048911
 Transform:
   m_ObjectHideFlags: 0
@@ -1315,6 +1315,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 773652427242318237, guid: 3e7fe3e3491f15343b8c313918368e9f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -25.400002
+      objectReference: {fileID: 0}
+    - target: {fileID: 2039883552526763993, guid: 3e7fe3e3491f15343b8c313918368e9f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -25.400002
+      objectReference: {fileID: 0}
     - target: {fileID: 8583896875856777449, guid: 3e7fe3e3491f15343b8c313918368e9f, type: 3}
       propertyPath: m_Name
       value: Client

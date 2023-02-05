@@ -13,6 +13,10 @@ namespace GGJRuntime
         protected int order = 0;
         [SerializeField, Tooltip("[Optional] Background to show when this view opens.")]
         protected BackgroundData background = null;
+        [SerializeField, Tooltip("[Optional] Tweens played when OpenAsync is called.")]
+        protected TweenGroup openTweens = null;
+        [SerializeField, Tooltip("[Optional] Tweens played when CloseAsync is called.")]
+        protected TweenGroup closeTweens = null;
         [SerializeField, Tooltip("Button navigations for the view.")]
         protected ViewNavigationData[] navigation = new ViewNavigationData[0];
 
@@ -55,11 +59,19 @@ namespace GGJRuntime
         }
 
 
-        public virtual UniTask OpenAsync()
+        public virtual async UniTask OpenAsync()
         {
+            if(IsOpen) return;
+
             Open();
 
-            return UniTask.CompletedTask;
+            if(openTweens != null)
+            {
+                bool wait = true;
+                openTweens.StartTweens(() => { wait = false; });
+
+                while(wait) await UniTask.Yield();
+            }
         }
 
 
@@ -71,11 +83,23 @@ namespace GGJRuntime
         }
 
 
-        public virtual UniTask CloseAsync()
+        public virtual async UniTask CloseAsync()
         {
-            Close();
+            if(!IsOpen) return;
 
-            return UniTask.CompletedTask;
+            if(closeTweens != null)
+            {
+                bool wait = true;
+                closeTweens.StartTweens(() => { wait = false; });
+
+                while(wait) await UniTask.Yield();
+
+                Close();
+            }
+            else
+            {
+                Close();
+            }
         }
 
 

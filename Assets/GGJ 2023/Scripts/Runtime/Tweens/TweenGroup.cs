@@ -1,21 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace GGJRuntime
 {
     public class TweenGroup : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        public TweenComponent[] tweens = new TweenComponent[0];
+
+        private int completedTweens = 0;
+
+        public void StartTweens(System.Action callback=null, bool reset=false)
         {
-        
+            completedTweens = 0;
+
+            for(int i=0; i < tweens.Length; i++)
+            {
+                tweens[i].StartTween(() => { OnTweenComplete(callback); }, false);
+            }
         }
 
-        // Update is called once per frame
-        void Update()
+
+        public void StopTweens()
         {
-        
+            for(int i = 0; i < tweens.Length; i++)
+            {
+                tweens[i].StopTween();
+            }
+        }
+
+
+        private void OnTweenComplete(System.Action callback)
+        {
+            completedTweens++;
+
+            if(callback == null) return;
+
+            if(completedTweens >= tweens.Length) callback.Invoke();
         }
     }
 }
