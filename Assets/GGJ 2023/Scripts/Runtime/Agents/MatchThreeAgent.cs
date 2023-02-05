@@ -5,10 +5,11 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Policies;
+using Unity.MLAgents.Integrations.Match3;
 
 namespace GGJRuntime
 {
-    public class TileAdjacencyAgent : Agent
+    public class MatchThreeAgent : Agent
     {
         [Header("Managers & Scriptables")]
         [SerializeField]
@@ -17,6 +18,8 @@ namespace GGJRuntime
         protected SoilFeatureCollection _collection = null;
 
         [Header("Agent Config")]
+        [SerializeField]
+        protected Match3SensorComponent _match3Sensor = null;
         [SerializeField]
         protected float _movementSpeed = 1f;
         [SerializeField]
@@ -92,7 +95,7 @@ namespace GGJRuntime
                 coordinates.Add(neighboringCoordinate.TileCoordinate);
             }
 
-            foreach(Vector3Int coordinate in coordinates)
+            foreach (Vector3Int coordinate in coordinates)
             {
                 var data = _mapManager.GetDataByTileCoordinate(coordinate);
 
@@ -104,7 +107,7 @@ namespace GGJRuntime
                 }
 
                 //if the tile has been visited, observe that its penalized
-                if(_visitedTiles.Contains(coordinate))
+                if (_visitedTiles.Contains(coordinate))
                 {
                     sensor.AddObservation(_failurePenality);
                     continue;
@@ -156,7 +159,7 @@ namespace GGJRuntime
                 {
                     Debug.Log("adding failure because we have fallen off the map!");
                 }
-                
+
                 AddReward(_failurePenality);
             }
             //otherwise we are at a new tile and on the map, so add whatever that tile is worth
@@ -172,7 +175,7 @@ namespace GGJRuntime
         {
             ActionSegment<float> continuousActionsOut = actionsOut.ContinuousActions;
 
-            if(_doRandomWalk)
+            if (_doRandomWalk)
             {
                 _simulatedTurnInput += Random.Range(0, 2) == 0 ? -0.1f : 0.1f;
             }
@@ -212,7 +215,7 @@ namespace GGJRuntime
         protected virtual void Update()
         {
             if (!_isGrowing) { return; }
-            
+
             transform.Translate(MovementVector, Space.World);
 
             if (_doRandomWalk)

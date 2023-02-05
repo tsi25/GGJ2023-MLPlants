@@ -107,10 +107,10 @@ MonoBehaviour:
   background: {fileID: 11400000, guid: 54593d7a2825d4244a37d0fab95f2985, type: 2}
   navigation:
   - button: {fileID: 2879327300418580385}
-    id: 2
+    id: 4
     keepOpen: 0
   _buttonAnimator: {fileID: 1615793630919403035}
-  _delay: 4
+  _delay: 2
   _state: {fileID: 11400000, guid: c2c1ec65d493ad34a95516d3bffa6d68, type: 2}
 --- !u!1 &2879327300418580387
 GameObject:
@@ -512,7 +512,7 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontSize: 32
-  m_fontSizeBase: 24
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

@@ -409,11 +409,13 @@ MonoBehaviour:
   _collection: {fileID: 11400000, guid: 8fc50f5d4ed75d3499e4b1d80586ce0f, type: 2}
   _movementSpeed: 1
   _turnSpeed: 85
-  _explorationCount: 15
+  _explorationCount: 20
   _failurePenality: -10
   _agentTurnInput: 0
   _simulatedTurnInput: 0
   _debug: 0
+  _trainer: 0
+  _doRandomWalk: 0
 --- !u!114 &2601674652650597399
 MonoBehaviour:
   m_ObjectHideFlags: 0

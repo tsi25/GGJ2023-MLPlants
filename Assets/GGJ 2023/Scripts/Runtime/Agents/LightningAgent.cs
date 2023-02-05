@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,6 +11,8 @@ namespace GGJRuntime
 {
     public class LightningAgent : Agent
     {
+        public Action OnGrowthHalted = delegate { };
+
         [Header("Managers & Scriptables")]
         [SerializeField]
         protected TilemapManager _mapManager = null;
@@ -59,8 +61,21 @@ namespace GGJRuntime
 
         protected HashSet<Vector3Int> _visitedTiles = new HashSet<Vector3Int>();
 
-        public delegate void OnTileHit(Vector3Int tileCoord);
+        public delegate void OnTileHit(Vector3Int tileCoord, LightningAgent agent);
         public event OnTileHit TileHitEvent;
+
+        public bool IsGrowing
+        {
+            get => _isGrowing;
+            set
+            {
+                _isGrowing = value;
+                if(!_isGrowing)
+                {
+                    OnGrowthHalted?.Invoke();
+                }
+            }
+        }
 
         public Vector3 MovementVector
         {
@@ -70,7 +85,7 @@ namespace GGJRuntime
         [ContextMenu("Start Growing")]
         public void StartGrowing()
         {
-            _isGrowing = true;
+            IsGrowing = true;
         }
 
         // =========== REGION FIVE GOLDEN CALLBACKS =========== 
@@ -128,7 +143,7 @@ namespace GGJRuntime
         {
             base.OnActionReceived(actions);
 
-            if (!_isGrowing) return;
+            if (!IsGrowing) return;
 
             //check if we need to turn
             _agentXComponent = actions.ContinuousActions[0];
@@ -141,12 +156,12 @@ namespace GGJRuntime
             //just entered a new tile
             _currentTilePosition = currentTilePosition;
             _visitedTileCount++;
-            TileHitEvent?.Invoke(_currentTilePosition);
+            TileHitEvent?.Invoke(_currentTilePosition, this);
 
             //if we have done the allotted amount of exploring we can end the episode and check our score
             if (_visitedTileCount > _explorationCount)
             {
-                EndEpisode();
+                //EndEpisode();
                 return;
             }
 
@@ -155,7 +170,7 @@ namespace GGJRuntime
             {
                 if (_debug) Debug.Log("adding failure because the current tile has been visited already!");
                 AddReward(_failurePenality);
-                EndEpisode();
+                //EndEpisode();
                 return;
             }
 
@@ -171,7 +186,7 @@ namespace GGJRuntime
                 }
 
                 AddReward(_failurePenality);
-                EndEpisode();
+                //EndEpisode();
             }
             //otherwise we are at a new tile and on the map, so add whatever that tile is worth
             else
@@ -183,7 +198,7 @@ namespace GGJRuntime
                 if (points == _collection.VeryBadModifier)
                 {
                     AddReward(_failurePenality);
-                    EndEpisode();
+                    //EndEpisode();
                 }
                 if (points == _collection.VeryGoodModifier)
                 {
@@ -244,13 +259,13 @@ namespace GGJRuntime
 
             GetComponentInChildren<TrailRenderer>().Clear();
 
-            _isGrowing = _growImmediately;
+            IsGrowing = _growImmediately;
         }
         // =========== END REGION FIVE GOLDEN CALLBACKS =========== 
 
         protected virtual void Update()
         {
-            if (!_isGrowing) { return; }
+            if (!IsGrowing) { return; }
             //transform.Translate(MovementVector, Space.World);
             Vector3 agentInput = new Vector3(_agentXComponent, _agentYComponent, 0f);
             Vector3 simulatedInput = new Vector3(_simulatedXComponent, _simulatedYComponent, 0f);
