@@ -1808,7 +1808,7 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Select One
+    - m_Text: Select one
       m_Image: {fileID: 0}
     - m_Text: Life
       m_Image: {fileID: 0}
@@ -1952,7 +1952,7 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Select One
+    - m_Text: Select one
       m_Image: {fileID: 0}
     - m_Text: Dirt
       m_Image: {fileID: 0}

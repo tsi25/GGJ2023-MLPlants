@@ -11,9 +11,7 @@ namespace GGJRuntime
         public Action OnGameStarted = delegate { };
 
         [SerializeField]
-        private Draggable[] Draggables = new Draggable[0];
-        [SerializeField]
-        private Droppable[] Droppables = new Droppable[0];
+        private SoilFeatureCollection _featureCollection = null;
 
         [SerializeField]
         private Button _startButton = null;
@@ -22,6 +20,9 @@ namespace GGJRuntime
 
         [SerializeField]
         private float _delay = 1f;
+
+        [SerializeField]
+        private ConditionalStatement[] _statements = new ConditionalStatement[0];
 
         [Header("Prompts")]
         [SerializeField]
@@ -52,10 +53,40 @@ namespace GGJRuntime
 
         public void DisplayLosePrompt()
         {
-            _buttonPrompt.text = _winPrompts[UnityEngine.Random.Range(0, _winPrompts.Length)];
+            _buttonPrompt.text = _losePrompts[UnityEngine.Random.Range(0, _losePrompts.Length)];
             _startButton.interactable = true;
         }
 
+        private void InitializeTileRewards()
+        {
+            _featureCollection.ClearTileRewards();
+
+            foreach (ConditionalStatement statement in _statements)
+            {
+                if (statement.SelectedSoilType != SoilType.None &&
+                    statement.SelectedModifierType != ModifierType.None)
+                {
+                    switch (statement.SelectedModifierType)
+                    {
+                        case ModifierType.Bad:
+                            _featureCollection.BadTileTypes.Add(statement.SelectedSoilType);
+                            break;
+
+                        case ModifierType.Good:
+                            _featureCollection.GoodTileTypes.Add(statement.SelectedSoilType);
+                            break;
+
+                        case ModifierType.VeryBad:
+                            _featureCollection.VeryBadTileTypes.Add(statement.SelectedSoilType);
+                            break;
+
+                        case ModifierType.VeryGood:
+                            _featureCollection.VeryGoodTileTypes.Add(statement.SelectedSoilType);
+                            break;
+                    }
+                }
+            }
+        }
 
         private IEnumerator DelayAction(Action callback)
         {
@@ -65,6 +96,7 @@ namespace GGJRuntime
 
         private void OnStartButtonClicked()
         {
+            InitializeTileRewards();
             _startButton.interactable = false;
             _buttonPrompt.text = "";
             OnGameStarted?.Invoke();
@@ -73,6 +105,9 @@ namespace GGJRuntime
         protected override void Start()
         {
             _startButton.onClick.AddListener(OnStartButtonClicked);
+
+            GameplayManager.OnGameWin += DisplayWinPrompt;
+            GameplayManager.OnGameLose += DisplayLosePrompt;
         }
     }
 }

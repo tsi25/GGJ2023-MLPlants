@@ -179,8 +179,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Training Arena (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 750276046501647587, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 8606903a1be4ea248be8f099186b6fd0, type: 3}
     - target: {fileID: 1744456430351884058, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _trainer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _doRandomWalk
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4889281250693551580, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
@@ -388,8 +400,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Training Arena (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 750276046501647587, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 8606903a1be4ea248be8f099186b6fd0, type: 3}
     - target: {fileID: 1744456430351884058, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _trainer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _doRandomWalk
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4889281250693551580, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
@@ -461,8 +485,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Training Arena (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 750276046501647587, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 8606903a1be4ea248be8f099186b6fd0, type: 3}
     - target: {fileID: 1744456430351884058, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _trainer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _doRandomWalk
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4889281250693551580, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
@@ -534,8 +570,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Training Arena (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 750276046501647587, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 8606903a1be4ea248be8f099186b6fd0, type: 3}
     - target: {fileID: 1744456430351884058, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _trainer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _doRandomWalk
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4889281250693551580, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
@@ -725,8 +773,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Training Arena (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 750276046501647587, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 8606903a1be4ea248be8f099186b6fd0, type: 3}
     - target: {fileID: 1744456430351884058, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _trainer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _doRandomWalk
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4889281250693551580, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
@@ -798,8 +858,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Training Arena (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 750276046501647587, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 8606903a1be4ea248be8f099186b6fd0, type: 3}
     - target: {fileID: 1744456430351884058, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _trainer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _doRandomWalk
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4889281250693551580, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
@@ -983,8 +1055,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Training Arena (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 750276046501647587, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 8606903a1be4ea248be8f099186b6fd0, type: 3}
     - target: {fileID: 1744456430351884058, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _trainer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _doRandomWalk
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4889281250693551580, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
@@ -1056,8 +1140,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Training Arena (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 750276046501647587, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 8606903a1be4ea248be8f099186b6fd0, type: 3}
     - target: {fileID: 1744456430351884058, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _trainer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _doRandomWalk
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4889281250693551580, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
@@ -1129,8 +1225,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Training Arena (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 750276046501647587, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 8606903a1be4ea248be8f099186b6fd0, type: 3}
     - target: {fileID: 1744456430351884058, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _trainer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _doRandomWalk
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4889281250693551580, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
@@ -1206,6 +1314,10 @@ PrefabInstance:
       propertyPath: _victoryThreshold
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 750276046501647587, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 8606903a1be4ea248be8f099186b6fd0, type: 3}
     - target: {fileID: 1734644901803807455, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
       propertyPath: _showGizmos
       value: 1
@@ -1214,8 +1326,20 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2213919950584016457, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
       propertyPath: _debug
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _trainer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233491038575857817, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}
+      propertyPath: _doRandomWalk
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4889281250693551580, guid: 66a817954441fd248a741acc8b6d76ca, type: 3}

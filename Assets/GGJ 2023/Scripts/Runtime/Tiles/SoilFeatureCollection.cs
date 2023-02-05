@@ -11,14 +11,14 @@ namespace GGJRuntime
     {
         //TODO instead of set in the inspector like this, this needs to be user driven
         [field: SerializeField]
-        public SoilType[] VeryGoodTileTypes { get; private set; } = new SoilType[0];
+        public List<SoilType> VeryGoodTileTypes { get; set; } = new List<SoilType> ();
         [field: SerializeField]
-        public SoilType[] GoodTileTypes { get; private set; } = new SoilType[0];
+        public List<SoilType> GoodTileTypes { get; set; } = new List<SoilType>();
 
         [field: SerializeField]
-        public SoilType[] BadTileTypes { get; private set; } = new SoilType[0];
+        public List<SoilType> BadTileTypes { get; set; } = new List<SoilType>();
         [field: SerializeField]
-        public SoilType[] VeryBadTileTypes { get; private set; } = new SoilType[0];
+        public List<SoilType> VeryBadTileTypes { get; set; } = new List<SoilType>();
 
         [field: SerializeField]
         public float VeryGoodModifier { get; private set; } = 1f;
@@ -36,6 +36,17 @@ namespace GGJRuntime
         /// </summary>
         [field: SerializeField, Tooltip("Static array of soil features used to track valid tiles")]
         public SoilTileData[] SoilFeatures { get; private set; } = new SoilTileData[0];
+
+        /// <summary>
+        /// Convenience methods to clear the specified reward lists
+        /// </summary>
+        public void ClearTileRewards()
+        {
+            VeryGoodTileTypes.Clear();
+            GoodTileTypes.Clear();
+            BadTileTypes.Clear();
+            VeryBadTileTypes.Clear();
+        }
 
         /// <summary>
         /// Takes a tile and looks up the data associated with that tile
