@@ -986,6 +986,8 @@ MonoBehaviour:
   root: {fileID: 8785809315289584377}
   order: 0
   background: {fileID: 0}
+  openTweens: {fileID: 0}
+  closeTweens: {fileID: 0}
   navigation: []
   _featureCollection: {fileID: 11400000, guid: 8fc50f5d4ed75d3499e4b1d80586ce0f, type: 2}
   _startButton: {fileID: 4495532805501810442}
@@ -2030,7 +2032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8848097150021913891
 RectTransform:
   m_ObjectHideFlags: 0
