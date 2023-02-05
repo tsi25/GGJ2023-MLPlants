@@ -17,6 +17,8 @@ namespace GGJRuntime
         private Button _startButton = null;
         [SerializeField]
         private TextMeshProUGUI _buttonPrompt = null;
+        [SerializeField]
+        private GameObject _startingExplanation = null;
 
         [SerializeField]
         private float _delay = 1f;
@@ -99,6 +101,7 @@ namespace GGJRuntime
             InitializeTileRewards();
             _startButton.interactable = false;
             _buttonPrompt.text = "";
+            _startingExplanation.SetActive(false);
             OnGameStarted?.Invoke();
         }
 
