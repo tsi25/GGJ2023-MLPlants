@@ -132,7 +132,11 @@ namespace GGJRuntime
         }
         #endregion
 
-
+        public void SwapSourceTilemap(Tilemap newSourceMap)
+        {
+            SourceMap = newSourceMap;
+            _cachedWFCGenerator = WFCGenerator.CreateRuntimeInstance(SourceMap, Map);
+        }
 
         public void CalculateMap()
         {
