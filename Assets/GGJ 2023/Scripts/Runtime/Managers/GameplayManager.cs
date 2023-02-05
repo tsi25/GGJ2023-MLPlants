@@ -37,8 +37,8 @@ namespace GGJRuntime
                 if(_winConditions.Contains(feature))
                 {
                     //agent has found a winning tile
-                    agent.IsGrowing = false;
                     EndGame(win: true);
+                    StopAgents();
                     return;
                 }
 
@@ -71,13 +71,17 @@ namespace GGJRuntime
             }
         }
 
+        private void StopAgents()
+        {
+            foreach (LightningAgent agent in _mlAgents)
+            {
+                if(agent.IsGrowing) agent.IsGrowing = false;
+            }
+        }
+
         private void EndGame(bool win)
         {
             _isPlaying = false;
-            foreach(LightningAgent agent in _mlAgents)
-            {
-                agent.EndEpisode();
-            }
 
             if (win)
             {
@@ -93,8 +97,10 @@ namespace GGJRuntime
         {
             foreach (LightningAgent agent in _mlAgents)
             {
+                agent.EndEpisode();
                 agent.StartGrowing();
             }
+
             _isPlaying = true;
         }
 
