@@ -17,5 +17,5 @@ MonoBehaviour:
     type: 0
     clip: {fileID: 8300000, guid: d5b8ddc7b8ed4a64abd8ef1cbc8630d7, type: 3}
     spatialBlend: 0
-    volume: 1
+    volume: 0.5
     limit: 0

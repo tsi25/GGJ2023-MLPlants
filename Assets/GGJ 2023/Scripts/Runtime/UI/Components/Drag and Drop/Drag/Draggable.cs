@@ -65,6 +65,7 @@ namespace GGJRuntime
             rectTransform.SetParent(DefaultParent);
 
             rectTransform.anchoredPosition3D = Vector3.zero;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform.parent.GetComponent<RectTransform>());
         }
 
 
@@ -89,8 +90,6 @@ namespace GGJRuntime
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            Debug.Log("End");
-
             IsDragging = false;
 
             if(CurrentDraggable == this) CurrentDraggable = null;
