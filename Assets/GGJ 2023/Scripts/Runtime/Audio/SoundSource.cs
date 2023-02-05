@@ -24,6 +24,7 @@ namespace GGJRuntime
             Source.clip = sound.clip;
             Source.spatialBlend = sound.spatialBlend;
             Source.volume = sound.volume;
+            Source.loop = sound.loop;
             Source.outputAudioMixerGroup = mixerGroup;
 
             Source.Play();
