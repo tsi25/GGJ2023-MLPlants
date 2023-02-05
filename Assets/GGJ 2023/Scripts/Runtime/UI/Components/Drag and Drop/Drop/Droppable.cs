@@ -10,6 +10,10 @@ namespace GGJRuntime
         protected DragGroupFlags flags = DragGroupFlags.None;
         [SerializeField, Tooltip("Logic used to evaluate drop operations.")]
         protected EvaluateDropLogic dropLogic = null;
+        [SerializeField, Tooltip("Logic invoked when a valid drop occurs.")]
+        protected DropLogic[] validDropLogic = new DropLogic[0];
+        [SerializeField, Tooltip("Logic invoked when an invalid drop occurs.")]
+        protected DropLogic[] invalidDropLogic = new DropLogic[0];
 
         public DragGroupFlags Flags => flags;
 
@@ -18,17 +22,27 @@ namespace GGJRuntime
             if(eventData.pointerDrag == null) return;
             if(Draggable.CurrentDraggable == null) return;
 
-            if(dropLogic.DoLogic(Draggable.CurrentDraggable, this))
+            Draggable currentDraggable = Draggable.CurrentDraggable;
+
+            if(dropLogic.DoLogic(currentDraggable, this))
             {
                 //Valid
-                Debug.Log("Valid");
-                Draggable.CurrentDraggable.DoValidDrop(this);
+                currentDraggable.DoValidDrop(this);
+
+                for(int i=0; i < validDropLogic.Length; i++)
+                {
+                    validDropLogic[i].DoLogic(currentDraggable, this);
+                }
             }
             else
             {
                 //Invalid
-                Debug.Log("Invalid");
-                Draggable.CurrentDraggable.DoInvalidDrop(this);
+                currentDraggable.DoInvalidDrop(this);
+
+                for(int i=0; i < invalidDropLogic.Length; i++)
+                {
+                    invalidDropLogic[i].DoLogic(currentDraggable, this);
+                }
             }
         }
     }

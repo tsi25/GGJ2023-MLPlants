@@ -8,6 +8,11 @@ namespace GGJRuntime
 {
     public class ConditionalStatement : MonoBehaviour
     {
+        [SerializeField]
+        private SetModifierValueLogic modifierLogic = null;
+        [SerializeField]
+        private SetObjectValueLogic conditionalLogic = null;
+
         [field: SerializeField]
         public SoilType SelectedSoilType { get; private set; } = SoilType.None;
         [field: SerializeField]
@@ -62,10 +67,33 @@ namespace GGJRuntime
             }
         }
 
+
+        private void OnModifierUpdated(ModifierType type)
+        {
+            SelectedModifierType = type;
+        }
+
+
+        private void OnConditionalUpdated(SoilType type)
+        {
+            SelectedSoilType = type;
+        }
+
+
+        private void OnDestroy()
+        {
+            modifierLogic.onUpdate -= OnModifierUpdated;
+            conditionalLogic.onUpdate -= OnConditionalUpdated;
+        }
+
+
         private void Start()
         {
             _objectDropdown.onValueChanged.AddListener(OnObjectDropdownValueChanged);
             _modifierDropdown.onValueChanged.AddListener(OnModifierDropdownValueChanged);
+
+            modifierLogic.onUpdate += OnModifierUpdated;
+            conditionalLogic.onUpdate += OnConditionalUpdated;
         }
     }
 }
