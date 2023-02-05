@@ -286,6 +286,7 @@ MonoBehaviour:
   _movementSpeed: 1
   _turnSpeed: 85
   _explorationCount: 30
+  _tileDecay: 512
   _failurePenality: -10
   _agentXComponent: 0
   _agentYComponent: 0
@@ -293,6 +294,7 @@ MonoBehaviour:
   _simulatedYComponent: 0
   _simulatedTurnInput: 0
   _debug: 0
+  _training: 0
 --- !u!114 &2601674652650597399
 MonoBehaviour:
   m_ObjectHideFlags: 0
