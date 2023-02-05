@@ -10,7 +10,7 @@ namespace GGJRuntime
         public static Action OnGameLose = delegate { };
 
         [SerializeField]
-        private TileAdjacencyAgent _mlAgent = null;
+        private LightningAgent[] _mlAgents = new LightningAgent[0];
         [SerializeField]
         private TilemapManager _map = null;
 
@@ -21,14 +21,14 @@ namespace GGJRuntime
 
         private bool _isPlaying = false;
 
-        private void AssertGameOver(SoilTileData data)
+        private void AssertGameOver(SoilTileData data, LightningAgent agent)
         {
             if (!_isPlaying) return;
 
             //agent has gone off the map
             if(data == null)
             {
-                EndGame(win: false);
+                agent.IsGrowing = false;
                 return;
             }
 
@@ -37,6 +37,7 @@ namespace GGJRuntime
                 if(_winConditions.Contains(feature))
                 {
                     //agent has found a winning tile
+                    agent.IsGrowing = false;
                     EndGame(win: true);
                     return;
                 }
@@ -44,16 +45,39 @@ namespace GGJRuntime
                 if (_loseConditions.Contains(feature))
                 {
                     //agent has found a losing tile
-                    EndGame(win: false);
+                    agent.IsGrowing = false;
                     return;
                 }
+            }
+        }
+
+        private void AssertGameLost()
+        {
+            if (!_isPlaying) return;
+
+            bool stillAlive = false;
+            foreach(LightningAgent agent in _mlAgents)
+            {
+                if(agent.IsGrowing)
+                {
+                    stillAlive = true;
+                    break;
+                }
+            }
+
+            if(!stillAlive)
+            {
+                EndGame(win: false);
             }
         }
 
         private void EndGame(bool win)
         {
             _isPlaying = false;
-            _mlAgent.EndEpisode();
+            foreach(LightningAgent agent in _mlAgents)
+            {
+                agent.EndEpisode();
+            }
 
             if (win)
             {
@@ -67,19 +91,27 @@ namespace GGJRuntime
 
         private void OnGameStarted()
         {
-            _mlAgent.StartGrowing();
+            foreach (LightningAgent agent in _mlAgents)
+            {
+                agent.StartGrowing();
+            }
             _isPlaying = true;
         }
 
-        private void OnTileHit(Vector3Int coordinate)
+        private void OnTileHit(Vector3Int coordinate, LightningAgent agent)
         {
             SoilTileData data = _map.GetDataByTileCoordinate(coordinate);
-            AssertGameOver(data);
+            AssertGameOver(data, agent);
         }
 
         private void Start()
         {
-            _mlAgent.TileHitEvent += OnTileHit;
+            foreach (LightningAgent agent in _mlAgents)
+            {
+                agent.TileHitEvent += OnTileHit;
+                agent.OnGrowthHalted += AssertGameLost;
+            }
+
             UIManager.GetView<TitleView>(GameViewId.Title, true).Open();
             UIManager.GetView<GameHUDView>(GameViewId.Game, true).OnGameStarted += OnGameStarted;
         }

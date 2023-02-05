@@ -76,6 +76,12 @@ namespace GGJRuntime
         /// <returns></returns>
         public float GetPointsFromData(SoilTileData data)
         {
+            if (data == null)
+            {
+                //Debug.LogError("somehow data is coming in null!!!");
+                return -1f;
+            }
+
             float tileScore = 0f;
 
             //loop through each tile feature and update the tile score to reflect the given score of the tile
