@@ -34,6 +34,7 @@ namespace GGJRuntime
         [SerializeField]
         protected bool _debug = false;
 
+        protected bool _isGrowing = false;
         protected Vector3 _cachedStartPosition = Vector3.zero;
         protected Vector3 _cachedStartRotation = Vector3.zero;
 
@@ -43,9 +44,18 @@ namespace GGJRuntime
 
         protected HashSet<Vector3Int> _visitedTiles = new HashSet<Vector3Int>();
 
+        public delegate void OnTileHit(Vector3Int tileCoord);
+        public event OnTileHit TileHitEvent;
+
         public Vector3 MovementVector
         {
             get { return (_movementSpeed * Time.deltaTime) * transform.forward; }
+        }
+
+        [ContextMenu("Start Growing")]
+        public void StartGrowing()
+        {
+            _isGrowing = true;
         }
 
         // =========== REGION FIVE GOLDEN CALLBACKS =========== 
@@ -71,7 +81,7 @@ namespace GGJRuntime
             Vector3Int currentPosition = _mapManager.GetTileCoordFromWorldCoord(transform.position);
 
             List<Vector3Int> coordinates = new List<Vector3Int>();
-            coordinates.Add(currentPosition);
+            //coordinates.Add(currentPosition); //knows about its own tile or not
             var neighboringCoordinates = _mapManager.GetNeighboringTileCoords(currentPosition, true);
             foreach (var neighboringCoordinate in neighboringCoordinates)
             {
@@ -112,8 +122,10 @@ namespace GGJRuntime
             //if we have visited this tile before and we are currently on this tile, return
             if (_visitedTiles.Contains(currentTilePosition) && currentTilePosition == _currentTilePosition) return;
 
+            //just entered a new tile
             _currentTilePosition = currentTilePosition;
             _visitedTileCount++;
+            TileHitEvent?.Invoke(_currentTilePosition);
 
             //if we have done the allotted amount of exploring we can end the episode and check our score
             if (_visitedTileCount > _explorationCount)
@@ -179,11 +191,14 @@ namespace GGJRuntime
             _visitedTileCount = 0;
 
             GetComponentInChildren<TrailRenderer>().Clear();
+
+            _isGrowing = false;
         }
         // =========== END REGION FIVE GOLDEN CALLBACKS =========== 
 
         protected virtual void Update()
         {
+            if (!_isGrowing) { return; }
             transform.Translate(MovementVector, Space.World);
             transform.Rotate(new Vector3(0f, Mathf.Clamp(_agentTurnInput + _simulatedTurnInput, -1f, 1f) * _turnSpeed * Time.deltaTime, 0f));
         }
