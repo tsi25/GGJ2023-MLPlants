@@ -30,6 +30,8 @@ namespace GGJRuntime
         [SerializeField]
         protected float _explorationCount = 25;
         [SerializeField]
+        protected int _tileDecay = 100;
+        [SerializeField]
         protected float _failurePenality = -10f;
 
         [SerializeField]
@@ -46,6 +48,8 @@ namespace GGJRuntime
         protected float _simulatedTurnInput = 0f;
         [SerializeField]
         protected bool _debug = false;
+        [SerializeField]
+        protected bool _training = false;
 
         // For pausing the root before user wants it to grow
         protected bool _isGrowing = false;
@@ -58,6 +62,8 @@ namespace GGJRuntime
         protected Vector3Int _currentTilePosition = Vector3Int.zero;
 
         protected int _visitedTileCount = 0;
+        
+        protected int _tileAge = 1;
 
         protected HashSet<Vector3Int> _visitedTiles = new HashSet<Vector3Int>();
 
@@ -150,10 +156,20 @@ namespace GGJRuntime
             _agentYComponent = actions.ContinuousActions[1];
             Vector3Int currentTilePosition = _mapManager.GetTileCoordFromWorldCoord(transform.position);
 
-            //if we have visited this tile before and we are currently on this tile, return
-            if (_visitedTiles.Contains(currentTilePosition) && currentTilePosition == _currentTilePosition) return;
+            //if we have visited this tile before and we are currently on this tile
+            if (_visitedTiles.Contains(currentTilePosition) && currentTilePosition == _currentTilePosition)
+            {
+                //if we arent training, check if we have stayed too long on the same tile and end the growth if so
+                if(!_training)
+                {
+                    _tileAge++;
+                    if (_tileAge == _tileDecay) IsGrowing = false;
+                }
+                return;
+            }
 
             //just entered a new tile
+            _tileAge = 0;
             _currentTilePosition = currentTilePosition;
             _visitedTileCount++;
             TileHitEvent?.Invoke(_currentTilePosition, this);
@@ -256,6 +272,7 @@ namespace GGJRuntime
             _simulatedTurnInput = 0f;
 
             _visitedTileCount = 0;
+            _tileAge = 0;
 
             GetComponentInChildren<TrailRenderer>().Clear();
 
