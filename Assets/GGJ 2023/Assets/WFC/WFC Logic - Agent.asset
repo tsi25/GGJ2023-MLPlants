@@ -17,3 +17,4 @@ MonoBehaviour:
   maxIterations: 500
   patternSize: 1
   equalWeights: 0
+  debugWfcIteration: 0

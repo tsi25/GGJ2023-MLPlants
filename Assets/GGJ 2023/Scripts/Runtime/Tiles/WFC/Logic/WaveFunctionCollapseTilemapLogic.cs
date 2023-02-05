@@ -19,6 +19,7 @@ namespace GGJRuntime
         public int patternSize = 1;
         [Tooltip("A little hazy, but I think if false this will try to reflect tile counts from the sample tilemap. So more frequent tiles will be more frequently output.")]
         public bool equalWeights = false;
+        public bool debugWfcIteration = true;
 
         private Tilemap inputTilemap = null;
         private Tilemap outputTilemap = null;
@@ -51,6 +52,8 @@ namespace GGJRuntime
         /// </summary>
         public void GenerateGrid()
         {
+            WfcCore.DebugIterations = debugWfcIteration;
+
             InputReader reader = new InputReader(inputTilemap);
             IValue<TileBase>[][] grid = reader.ReadInputToGrid();
             valuesManager = new ValuesManager<TileBase>(grid);
