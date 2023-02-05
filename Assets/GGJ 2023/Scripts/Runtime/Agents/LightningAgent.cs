@@ -21,6 +21,8 @@ namespace GGJRuntime
 
         [Header("Agent Config")]
         [SerializeField]
+        protected bool _generateMapOnEpisodeStart = true;
+        [SerializeField]
         protected bool _growImmediately = false;
         [SerializeField]
         protected float _movementSpeed = 1f;
@@ -33,7 +35,10 @@ namespace GGJRuntime
         protected int _tileDecay = 100;
         [SerializeField]
         protected float _failurePenality = -10f;
+        [SerializeField]
+        protected float _maxGrowthDuration = 60f;
 
+        [Header("Window to the Soul")]
         [SerializeField]
         protected float _agentXComponent = 0f;
         [SerializeField]
@@ -53,6 +58,7 @@ namespace GGJRuntime
 
         // For pausing the root before user wants it to grow
         protected bool _isGrowing = false;
+        protected float _growthDuration = 0f;
         // So we can guarantee we don't start in lava
         protected Vector3Int FirstTileCoord = new Vector3Int(7, 14, 0);
 
@@ -79,6 +85,10 @@ namespace GGJRuntime
                 if(!_isGrowing)
                 {
                     OnGrowthHalted?.Invoke();
+                }
+                if (_isGrowing)
+                {
+                    _growthDuration = 0f;
                 }
             }
         }
@@ -244,19 +254,22 @@ namespace GGJRuntime
             base.OnEpisodeBegin();
 
             // TODO : This is a gross way to prevent a magma tile in the starting position, would be better to modify WFC
-            bool happyMap = false;
-            while (!happyMap)
+            if (_generateMapOnEpisodeStart)
             {
-                _mapManager.GenerateWFCMap();
-
-                happyMap = true;
-
-                foreach (var tileFeature in _mapManager.GetDataByTileCoordinate(FirstTileCoord).Features)
+                bool happyMap = false;
+                while (!happyMap)
                 {
-                    if (tileFeature.SoilType == SoilType.Magma)
+                    _mapManager.GenerateWFCMap();
+
+                    happyMap = true;
+
+                    foreach (var tileFeature in _mapManager.GetDataByTileCoordinate(FirstTileCoord).Features)
                     {
-                        happyMap = false;
-                        if (_debug) { Debug.Log("Impossible map detected, re-rolling!"); }
+                        if (tileFeature.SoilType == SoilType.Magma)
+                        {
+                            happyMap = false;
+                            if (_debug) { Debug.Log("Impossible map detected, re-rolling!"); }
+                        }
                     }
                 }
             }
@@ -288,6 +301,12 @@ namespace GGJRuntime
             Vector3 simulatedInput = new Vector3(_simulatedXComponent, _simulatedYComponent, 0f);
             transform.position += _movementSpeed * Time.deltaTime * agentInput.normalized + _movementSpeed * Time.deltaTime * simulatedInput;
             //transform.Rotate(new Vector3(0f, Mathf.Clamp(_agentTurnInput + _simulatedTurnInput, -1f, 1f) * _turnSpeed * Time.deltaTime, 0f));
+
+            _growthDuration += Time.deltaTime;
+            if (_growthDuration >= _maxGrowthDuration)
+            {
+                IsGrowing = false;
+            }
         }
     }
 }

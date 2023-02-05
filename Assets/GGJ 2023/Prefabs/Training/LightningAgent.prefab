@@ -282,12 +282,14 @@ MonoBehaviour:
   MaxStep: 0
   _mapManager: {fileID: 0}
   _collection: {fileID: 11400000, guid: 8fc50f5d4ed75d3499e4b1d80586ce0f, type: 2}
+  _generateMapOnEpisodeStart: 1
   _growImmediately: 0
   _movementSpeed: 1
   _turnSpeed: 85
   _explorationCount: 30
   _tileDecay: 512
   _failurePenality: -10
+  _maxGrowthDuration: 45
   _agentXComponent: 0
   _agentYComponent: 0
   _simulatedXComponent: 0
