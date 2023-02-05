@@ -60,7 +60,7 @@ Material:
     m_Floats:
     - _Wind_Direction: -0.1
     - _Wind_Speed: 2
-    - _Wind_Strength: 1
+    - _Wind_Strength: 0.5
     - _Wind_Variance: 0.05
     - _Windspeed: 0
     m_Colors: []
