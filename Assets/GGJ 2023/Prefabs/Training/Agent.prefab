@@ -404,7 +404,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 5000
+  MaxStep: 0
   _mapManager: {fileID: 0}
   _collection: {fileID: 11400000, guid: 8fc50f5d4ed75d3499e4b1d80586ce0f, type: 2}
   _movementSpeed: 1
@@ -427,7 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 12
+    VectorObservationSize: 11
     NumStackedVectorObservations: 3
     m_ActionSpec:
       m_NumContinuousActions: 1
